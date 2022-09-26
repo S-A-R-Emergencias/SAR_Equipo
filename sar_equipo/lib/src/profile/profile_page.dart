@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
 
-class HomeContent extends StatelessWidget{
-  const HomeContent({Key? key }):super(key: key);
-
+class ProfileScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -68,7 +66,7 @@ class HomeContent extends StatelessWidget{
                                       style: TextStyle(
                                         color: Color.fromRGBO(34, 40, 49, 1),
                                         fontFamily: 'Nunito',
-                                        fontSize: 37,
+                                        fontSize: width<=800? 32:37,
                                         fontWeight: FontWeight.bold
                                       ),
                                     ),
@@ -86,16 +84,16 @@ class HomeContent extends StatelessWidget{
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
-                                                fontSize: 25,
+                                                fontSize: width<=800? 20:25,
                                                 fontWeight: FontWeight.bold
                                               ),
                                             ),
                                             Text(
-                                              'Ninguna',
+                                              'A la Coca cola',
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
-                                                fontSize: 25,
+                                                fontSize: width<=800? 20:25,
                                               ),
                                             ),
                                           ],
@@ -122,7 +120,7 @@ class HomeContent extends StatelessWidget{
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
-                                                fontSize: 25,
+                                                fontSize: width<=800? 20:25,
                                                 fontWeight: FontWeight.bold
                                               ),
                                             ),
@@ -131,7 +129,7 @@ class HomeContent extends StatelessWidget{
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
-                                                fontSize: 25,
+                                                fontSize: width<=800? 20:25,
                                               ),
                                             ),
                                           ],
@@ -206,7 +204,43 @@ class HomeContent extends StatelessWidget{
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontFamily: 'Nunito',
-                                      fontSize: 25,
+                                      fontSize: width<=800? 18:20,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'Correo Electronico',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'Fecha de nacimiento',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'Direccion',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
                                       fontWeight: FontWeight.bold
                                     ),
                                   ),
@@ -214,7 +248,7 @@ class HomeContent extends StatelessWidget{
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 25,
+                                  horizontal: 20,
                                   vertical: 8,
                                 ),
                                 child: Container(
@@ -234,7 +268,43 @@ class HomeContent extends StatelessWidget{
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontFamily: 'Nunito',
-                                      fontSize: 25,
+                                      fontSize: width<=800? 18:20,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'JhonDow@gmail.com',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    '29/12/2072',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    'En su casa',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(34, 40, 49, 1),
+                                      fontSize: width<=800? 18:20,
+                                      fontFamily: 'Nunito',
                                       fontWeight: FontWeight.bold
                                     ),
                                   ),
@@ -251,6 +321,76 @@ class HomeContent extends StatelessWidget{
                               color: Colors.grey,
                               borderRadius: BorderRadius.circular(30),
                             ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(child:Row(children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: <Color>[
+                                                  Color.fromRGBO(253, 112, 19, 1),
+                                                  Color.fromRGBO(253, 112, 19, 1),
+                                                  Color.fromRGBO(253, 112, 19, 1),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            foregroundColor: Color.fromRGBO(34, 40, 49, 1),
+                                            padding: const EdgeInsets.all(20.0),
+                                            textStyle: const TextStyle(fontSize: 20),
+                                          ),
+                                          onPressed: () {},
+                                          child: const Text('Cambiar Contraseña'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: <Color>[
+                                                  Color.fromRGBO(34, 40, 49, 1),
+                                                  Color.fromRGBO(34, 40, 49, 1),
+                                                  Color.fromRGBO(34, 40, 49, 1),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            padding: const EdgeInsets.all(20.0),
+                                            textStyle: const TextStyle(fontSize: 20),
+                                          ),
+                                          onPressed: () {},
+                                          child: const Text('Editar Perfil'),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ),
+                              ]
+                            )
                           ),
                         ],
                       ),
@@ -260,6 +400,5 @@ class HomeContent extends StatelessWidget{
               ),
             ),
     );
-
   }
 }

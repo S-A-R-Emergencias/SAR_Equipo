@@ -24,7 +24,7 @@ class FooterButton extends StatelessWidget{
           child: Text(
             text,
             style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 18.0,
                 fontWeight: FontWeight.w600,
                 color: Color.fromRGBO(34, 40, 49, 1),
               ),

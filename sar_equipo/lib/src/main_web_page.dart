@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sar_equipo/src/content/home_content.dart';
 import 'package:sar_equipo/src/footer/footer.dart';
+import 'package:sar_equipo/src/profile/profile_page.dart';
 import 'navigation_bar/nav_bar.dart';
 
 
@@ -23,12 +24,14 @@ class MainWebPage extends StatelessWidget {
                   child: Column(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: <Widget>[
-                      const HomeContent(),
+                      Container(child:ProfileScreen()),
                       const Footer(),
+                      
                     ],
                   ),
                 ),
               ),
+              
             ],
           ),
         ),
