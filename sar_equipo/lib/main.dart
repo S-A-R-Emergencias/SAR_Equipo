@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/screens/inventory.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Inventory());
 }
 
 class MyApp extends StatelessWidget {
