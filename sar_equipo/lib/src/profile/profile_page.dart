@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/Models/Person_model.dart';
 import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
+import '../../Models/personnel_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //*************************************** */
+    //se tiene que hacer aqui una consulta al perfil sql
+    /****************************************** */
+    Person pers = Person(id: 1, name: 'Juan', lastName: 'Perez', secondLastName: 'Lopez', email: 'Juan@gmail.com', password: '123456', birthDate: DateTime(1999,12,12), address: 'Av. Siempre Viva', ci: 7256339, lastUpdate: DateTime(2000,12,12), registerDate: DateTime(2000,12,12), role: '', status: 1, telephone: 7250678) ;
+    Personnel per = Personnel(id: 1, allergies: 'Gatos,Perros', bloodType: 'ORH+', grade: 'Voluntario', lastUpdate: DateTime(2000,12,12), registerDate: DateTime(2000,12,12), status: 1);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -62,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 80,
                                     ),
                                     Text(
-                                      'Jhon Doe',
+                                      pers.name + " " + pers.lastName + " " + pers.secondLastName,
                                       style: TextStyle(
                                         color: Color.fromRGBO(34, 40, 49, 1),
                                         fontFamily: 'Nunito',
@@ -89,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              'A la Coca cola',
+                                              per.allergies,
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
@@ -125,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              'ORH+',
+                                              per.bloodType,
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
@@ -264,7 +271,7 @@ class ProfileScreen extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    '+591 72658954',
+                                    pers.telephone.toString(),
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontFamily: 'Nunito',
@@ -276,7 +283,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    'JhonDow@gmail.com',
+                                    pers.email,
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
@@ -288,7 +295,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    '29/12/2072',
+                                    pers.birthDate.day.toString()+"-"+pers.birthDate.month.toString()+"-" + pers.birthDate.year.toString(),
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
@@ -300,7 +307,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    'En su casa',
+                                    pers.address,
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
