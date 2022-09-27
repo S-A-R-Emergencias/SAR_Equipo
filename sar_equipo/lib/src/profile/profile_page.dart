@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/Models/Person_model.dart';
 import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
-import '../../Model/personal_model.dart';
+import '../../Models/personnel_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -9,7 +10,8 @@ class ProfileScreen extends StatelessWidget {
     //*************************************** */
     //se tiene que hacer aqui una consulta al perfil sql
     /****************************************** */
-    Personel per = new Personel(name: "Juan", lastName: "Perez", secondLastName: "Lopez", address: "Av.Ayacucho", birthDate: new DateTime(2000,12,11), email: "JpereezLopez@gmail.com", telephone: "72596321", allergies: "Perros", bloodType: "ORH+", grade: "Voluntario");
+    Person pers = Person(id: 1, name: 'Juan', lastName: 'Perez', secondLastName: 'Lopez', email: 'Juan@gmail.com', password: '123456', birthDate: DateTime(1999,12,12), address: 'Av. Siempre Viva', ci: 7256339, lastUpdate: DateTime(2000,12,12), registerDate: DateTime(2000,12,12), role: '', status: 1, telephone: 7250678) ;
+    Personnel per = Personnel(id: 1, allergies: 'Gatos,Perros', bloodType: 'ORH+', grade: 'Voluntario', lastUpdate: DateTime(2000,12,12), registerDate: DateTime(2000,12,12), status: 1);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -67,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
                                       height: 80,
                                     ),
                                     Text(
-                                      per.name + " " + per.lastName + " " + per.secondLastName,
+                                      pers.name + " " + pers.lastName + " " + pers.secondLastName,
                                       style: TextStyle(
                                         color: Color.fromRGBO(34, 40, 49, 1),
                                         fontFamily: 'Nunito',
@@ -269,7 +271,7 @@ class ProfileScreen extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    per.telephone,
+                                    pers.telephone.toString(),
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontFamily: 'Nunito',
@@ -281,7 +283,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    per.email,
+                                    pers.email,
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
@@ -293,7 +295,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    per.birthDate.day.toString()+"-"+per.birthDate.month.toString()+"-" + per.birthDate.year.toString(),
+                                    pers.birthDate.day.toString()+"-"+pers.birthDate.month.toString()+"-" + pers.birthDate.year.toString(),
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
@@ -305,7 +307,7 @@ class ProfileScreen extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Text(
-                                    per.address,
+                                    pers.address,
                                     style: TextStyle(
                                       color: Color.fromRGBO(34, 40, 49, 1),
                                       fontSize: width<=800? 18:20,
