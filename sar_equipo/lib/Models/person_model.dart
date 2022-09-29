@@ -74,4 +74,17 @@ class Person {
         "password": password,
         "role": role,
     };
+
+    Map<String, dynamic> toInsertJson() => {
+        "name": name,
+        "lastName": lastName,
+        "secondLastName": secondLastName,
+        "ci": ci,
+        "address": address,
+        "birthDate": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
+        "email": email,
+        "telephone": telephone,
+        "password": password,
+        "role": role,
+    };
 }

@@ -62,4 +62,14 @@ class Element {
         "User": user,
         "idElementType": idElementType,
     };
+
+    Map<String, dynamic> toInsertJson() => {
+        "name": name,
+        "serialNumber": serialNumber,
+        "amount": amount,
+        "description": description,
+        "unitOfMeasurement": unitOfMeasurement,
+        "User": user,
+        "idElementType": idElementType,
+    };
 }

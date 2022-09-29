@@ -58,4 +58,13 @@ class AccidentReport {
         "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
         "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
     };
+
+    Map<String, dynamic> toInsertJson() => {
+        "idEventType": idEventType,
+        "idUser": idUser,
+        "description": description,
+        "longitude": longitude,
+        "latitude": latitude,
+        "requestDate": "${requestDate.year.toString().padLeft(4, '0')}-${requestDate.month.toString().padLeft(2, '0')}-${requestDate.day.toString().padLeft(2, '0')}",
+    };
 }

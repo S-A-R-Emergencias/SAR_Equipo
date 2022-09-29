@@ -1,58 +1,50 @@
 // To parse this JSON data, do
 //
-//     final personnel = personnelFromJson(jsonString);
+//     final elementType = elementTypeFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'Person_model.dart';
+ElementType elementTypeFromJson(String str) => ElementType.fromJson(json.decode(str));
 
-Personnel personnelFromJson(String str) => Personnel.fromJson(json.decode(str));
+String elementTypeToJson(ElementType data) => json.encode(data.toJson());
 
-String personnelToJson(Personnel data) => json.encode(data.toJson());
-
-class Personnel{
-    Personnel({
+class ElementType {
+    ElementType({
         required this.id,
-        required this.grade,
-        required this.bloodType,
-        required this.allergies,
+        required this.name,
         required this.status,
         required this.registerDate,
         required this.lastUpdate,
+        required this.user,
     });
 
     int id;
-    String grade;
-    String bloodType;
-    String allergies;
+    String name;
     int status;
     DateTime registerDate;
     DateTime lastUpdate;
+    int user;
 
-    factory Personnel.fromJson(Map<String, dynamic> json) => Personnel(
+    factory ElementType.fromJson(Map<String, dynamic> json) => ElementType(
         id: json["id"],
-        grade: json["grade"],
-        bloodType: json["bloodType"],
-        allergies: json["allergies"],
+        name: json["name"],
         status: json["status"],
         registerDate: DateTime.parse(json["registerDate"]),
         lastUpdate: DateTime.parse(json["lastUpdate"]),
+        user: json["User"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "grade": grade,
-        "bloodType": bloodType,
-        "allergies": allergies,
+        "name": name,
         "status": status,
         "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
         "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "User": user,
     };
 
     Map<String, dynamic> toInsertJson() => {
-        "id": id,
-        "grade": grade,
-        "bloodType": bloodType,
-        "allergies": allergies,
+        "name": name,
+        "User": user,
     };
 }
