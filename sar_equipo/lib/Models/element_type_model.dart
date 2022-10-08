@@ -10,20 +10,20 @@ String elementTypeToJson(ElementType data) => json.encode(data.toJson());
 
 class ElementType {
     ElementType({
-        required this.id,
-        required this.name,
-        required this.status,
-        required this.registerDate,
-        required this.lastUpdate,
-        required this.user,
+        this.id,
+        this.name,
+        this.status,
+        this.registerDate,
+        this.lastUpdate,
+        this.user,
     });
 
-    int id;
-    String name;
-    int status;
-    DateTime registerDate;
-    DateTime lastUpdate;
-    int user;
+    int? id;
+    String? name;
+    int? status;
+    DateTime? registerDate;
+    DateTime? lastUpdate;
+    int? user;
 
     factory ElementType.fromJson(Map<String, dynamic> json) => ElementType(
         id: json["id"],
@@ -38,8 +38,8 @@ class ElementType {
         "id": id,
         "name": name,
         "status": status,
-        "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
+        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
         "User": user,
     };
 

@@ -10,7 +10,7 @@ String personToJson(Person data) => json.encode(data.toJson());
 
 class Person {
     Person({
-        required this.id,
+        this.id,
         required this.name,
         required this.lastName,
         required this.secondLastName,
@@ -19,14 +19,14 @@ class Person {
         required this.birthDate,
         required this.email,
         required this.telephone,
-        required this.status,
-        required this.registerDate,
-        required this.lastUpdate,
+        this.status,
+        this.registerDate,
+        this.lastUpdate,
         required this.password,
         required this.role,
     });
 
-    int id;
+    int? id;
     String name;
     String lastName;
     String secondLastName;
@@ -35,9 +35,9 @@ class Person {
     DateTime birthDate;
     String email;
     int telephone;
-    int status;
-    DateTime registerDate;
-    DateTime lastUpdate;
+    int? status;
+    DateTime? registerDate;
+    DateTime? lastUpdate;
     String password;
     String role;
 
@@ -69,8 +69,8 @@ class Person {
         "email": email,
         "telephone": telephone,
         "status": status,
-        "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
+        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
         "password": password,
         "role": role,
     };

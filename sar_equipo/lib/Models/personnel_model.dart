@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'Person_model.dart';
-
 Personnel personnelFromJson(String str) => Personnel.fromJson(json.decode(str));
 
 String personnelToJson(Personnel data) => json.encode(data.toJson());
@@ -16,18 +14,18 @@ class Personnel{
         required this.grade,
         required this.bloodType,
         required this.allergies,
-        required this.status,
-        required this.registerDate,
-        required this.lastUpdate,
+        this.status,
+        this.registerDate,
+        this.lastUpdate,
     });
 
     int id;
     String grade;
     String bloodType;
     String allergies;
-    int status;
-    DateTime registerDate;
-    DateTime lastUpdate;
+    int? status;
+    DateTime? registerDate;
+    DateTime? lastUpdate;
 
     factory Personnel.fromJson(Map<String, dynamic> json) => Personnel(
         id: json["id"],
@@ -45,8 +43,8 @@ class Personnel{
         "bloodType": bloodType,
         "allergies": allergies,
         "status": status,
-        "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
+        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
     };
 
     Map<String, dynamic> toInsertJson() => {

@@ -10,28 +10,28 @@ String accidentReportToJson(AccidentReport data) => json.encode(data.toJson());
 
 class AccidentReport {
     AccidentReport({
-        required this.id,
-        required this.idEventType,
-        required this.idUser,
-        required this.description,
-        required this.longitude,
-        required this.latitude,
-        required this.requestDate,
-        required this.status,
-        required this.registerDate,
-        required this.lastUpdate,
+         this.id,
+         this.idEventType,
+         this.idUser,
+         this.description,
+         this.longitude,
+         this.latitude,
+         this.requestDate,
+         this.status,
+         this.registerDate,
+         this.lastUpdate,
     });
 
-    int id;
-    int idEventType;
-    int idUser;
-    String description;
-    double longitude;
-    double latitude;
-    DateTime requestDate;
-    int status;
-    DateTime registerDate;
-    DateTime lastUpdate;
+    int? id;
+    int? idEventType;
+    int? idUser;
+    String? description;
+    double? longitude;
+    double? latitude;
+    DateTime? requestDate;
+    int? status;
+    DateTime? registerDate;
+    DateTime? lastUpdate;
 
     factory AccidentReport.fromJson(Map<String, dynamic> json) => AccidentReport(
         id: json["id"],
@@ -53,10 +53,10 @@ class AccidentReport {
         "description": description,
         "longitude": longitude,
         "latitude": latitude,
-        "requestDate": "${requestDate.year.toString().padLeft(4, '0')}-${requestDate.month.toString().padLeft(2, '0')}-${requestDate.day.toString().padLeft(2, '0')}",
+        "requestDate": "${requestDate?.year.toString().padLeft(4, '0')}-${requestDate?.month.toString().padLeft(2, '0')}-${requestDate?.day.toString().padLeft(2, '0')}",
         "status": status,
-        "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
+        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
     };
 
     Map<String, dynamic> toInsertJson() => {
@@ -65,6 +65,6 @@ class AccidentReport {
         "description": description,
         "longitude": longitude,
         "latitude": latitude,
-        "requestDate": "${requestDate.year.toString().padLeft(4, '0')}-${requestDate.month.toString().padLeft(2, '0')}-${requestDate.day.toString().padLeft(2, '0')}",
+        "requestDate": "${requestDate?.year.toString().padLeft(4, '0')}-${requestDate?.month.toString().padLeft(2, '0')}-${requestDate?.day.toString().padLeft(2, '0')}",
     };
 }

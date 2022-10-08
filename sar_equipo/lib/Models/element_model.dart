@@ -10,30 +10,30 @@ String elementToJson(Element data) => json.encode(data.toJson());
 
 class Element {
     Element({
-        required this.id,
-        required this.name,
-        required this.serialNumber,
-        required this.amount,
-        required this.description,
-        required this.unitOfMeasurement,
-        required this.status,
-        required this.registerDate,
-        required this.lastUpdate,
-        required this.user,
-        required this.idElementType,
+         this.id,
+         this.name,
+         this.serialNumber,
+         this.amount,
+         this.description,
+         this.unitOfMeasurement,
+         this.status,
+         this.registerDate,
+         this.lastUpdate,
+         this.user,
+         this.idElementType,
     });
 
-    int id;
-    String name;
-    int serialNumber;
-    int amount;
-    String description;
-    String unitOfMeasurement;
-    int status;
-    DateTime registerDate;
-    DateTime lastUpdate;
-    int user;
-    int idElementType;
+    int? id;
+    String? name;
+    int? serialNumber;
+    int? amount;
+    String? description;
+    String? unitOfMeasurement;
+    int? status;
+    DateTime? registerDate;
+    DateTime? lastUpdate;
+    int? user;
+    int? idElementType;
 
     factory Element.fromJson(Map<String, dynamic> json) => Element(
         id: json["id"],
@@ -57,8 +57,8 @@ class Element {
         "description": description,
         "unitOfMeasurement": unitOfMeasurement,
         "status": status,
-        "registerDate": "${registerDate.year.toString().padLeft(4, '0')}-${registerDate.month.toString().padLeft(2, '0')}-${registerDate.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate.year.toString().padLeft(4, '0')}-${lastUpdate.month.toString().padLeft(2, '0')}-${lastUpdate.day.toString().padLeft(2, '0')}",
+        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
+        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
         "User": user,
         "idElementType": idElementType,
     };
