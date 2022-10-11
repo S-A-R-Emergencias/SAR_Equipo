@@ -27,64 +27,64 @@ class Person {
     });
 
     int? id;
-    String name;
-    String lastName;
-    String secondLastName;
-    int ci;
-    String address;
-    DateTime birthDate;
-    String email;
-    int telephone;
+    String? name;
+    String? lastName;
+    String? secondLastName;
+    int? ci;
+    String? address;
+    DateTime? birthDate;
+    String? email;
+    int? telephone;
     int? status;
     DateTime? registerDate;
     DateTime? lastUpdate;
-    String password;
-    String role;
+    String? password;
+    String? role;
 
-    factory Person.fromJson(Map<String, dynamic> json) => Person(
-        id: json["id"],
-        name: json["name"],
-        lastName: json["lastName"],
-        secondLastName: json["secondLastName"],
-        ci: json["ci"],
-        address: json["address"],
-        birthDate: DateTime.parse(json["birthDate"]),
-        email: json["email"],
-        telephone: json["telephone"],
-        status: json["status"],
-        registerDate: DateTime.parse(json["registerDate"]),
-        lastUpdate: DateTime.parse(json["lastUpdate"]),
-        password: json["password"],
-        role: json["role"],
+    factory Person.fromJson(dynamic json) => Person(
+        id: json["id"] == null ? null : json["id"],
+        name: json["name"] == null ? null : json["name"],
+        lastName: json["lastName"] == null ? null : json["lastName"],
+        secondLastName: json["secondLastName"] == null ? null : json["secondLastName"],
+        ci: json["ci"] == null ? null : json["ci"],
+        address: json["address"] == null ? null : json["address"],
+        birthDate: json["birthDate"] == null ? null : DateTime.parse(json["birthDate"]),
+        email: json["email"] == null ? null : json["email"],
+        telephone: json["telephone"] == null ? null : json["telephone"],
+        status: json["status"] == null ? null : json["status"],
+        registerDate: json["registerDate"] == null ? null : DateTime.parse(json["registerDate"]),
+        lastUpdate: json["lastUpdate"] == null ? null : DateTime.parse(json["lastUpdate"]),
+        password: json["password"] == null ? null : json["password"],
+        role: json["role"] == null ? null : json["role"],
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "lastName": lastName,
-        "secondLastName": secondLastName,
-        "ci": ci,
-        "address": address,
-        "birthDate": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
-        "email": email,
-        "telephone": telephone,
-        "status": status,
-        "registerDate": "${registerDate?.year.toString().padLeft(4, '0')}-${registerDate?.month.toString().padLeft(2, '0')}-${registerDate?.day.toString().padLeft(2, '0')}",
-        "lastUpdate": "${lastUpdate?.year.toString().padLeft(4, '0')}-${lastUpdate?.month.toString().padLeft(2, '0')}-${lastUpdate?.day.toString().padLeft(2, '0')}",
-        "password": password,
-        "role": role,
+        "id": id == null ? null : id,
+        "name": name == null ? null : name,
+        "lastName": lastName == null ? null : lastName,
+        "secondLastName": secondLastName == null ? null : secondLastName,
+        "ci": ci == null ? null : ci,
+        "address": address == null ? null : address,
+        "birthDate": birthDate == null ? null : birthDate?.toIso8601String(),
+        "email": email == null ? null : email,
+        "telephone": telephone == null ? null : telephone,
+        "status": status == null ? null : status,
+        "registerDate": registerDate == null ? null : registerDate?.toIso8601String(),
+        "lastUpdate": lastUpdate == null ? null : lastUpdate?.toIso8601String(),
+        "password": password == null ? null : password,
+        "role": role == null ? null : role,
     };
 
     Map<String, dynamic> toInsertJson() => {
-        "name": name,
-        "lastName": lastName,
-        "secondLastName": secondLastName,
-        "ci": ci,
-        "address": address,
-        "birthDate": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
-        "email": email,
-        "telephone": telephone,
-        "password": password,
-        "role": role,
+        "name": name == null ? null : name,
+        "lastName": lastName == null ? null : lastName,
+        "secondLastName": secondLastName == null ? null : secondLastName,
+        "ci": ci == null ? null : ci,
+        "address": address == null ? null : address,
+        "birthDate": birthDate == null ? null : birthDate?.toIso8601String(),
+        "email": email == null ? null : email,
+        "telephone": telephone == null ? null : telephone,
+        "password": password == null ? null : password,
+        "role": role == null ? null : role,
     };
 }

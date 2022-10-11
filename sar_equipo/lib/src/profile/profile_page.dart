@@ -84,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   height: 80,
                                                 ),
                                                 Text(
-                                                  pers.name + " " + pers.lastName + " " + pers.secondLastName,
+                                                  "${pers.name} ${pers.lastName} ${pers.secondLastName}",
                                                   style: TextStyle(
                                                     color: Color.fromRGBO(34, 40, 49, 1),
                                                     fontFamily: 'Nunito',
@@ -298,7 +298,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 height: 20,
                                               ),
                                               Text(
-                                                pers.email,
+                                                pers.email.toString(),
                                                 style: TextStyle(
                                                   color: Color.fromRGBO(34, 40, 49, 1),
                                                   fontSize: width<=800? 18:20,
@@ -310,7 +310,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 height: 20,
                                               ),
                                               Text(
-                                                pers.birthDate.day.toString()+"-"+pers.birthDate.month.toString()+"-" + pers.birthDate.year.toString(),
+                                                "${pers.birthDate?.day}-${pers.birthDate?.month}-${pers.birthDate?.year}",
                                                 style: TextStyle(
                                                   color: Color.fromRGBO(34, 40, 49, 1),
                                                   fontSize: width<=800? 18:20,
@@ -322,7 +322,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 height: 20,
                                               ),
                                               Text(
-                                                pers.address,
+                                                pers.address.toString(),
                                                 style: TextStyle(
                                                   color: Color.fromRGBO(34, 40, 49, 1),
                                                   fontSize: width<=800? 18:20,

@@ -10,7 +10,6 @@ class PersonProvider extends ChangeNotifier{
     }
     var service = PersonService();
     persons = await service.getAll();
-    print(persons?[0].address);
     notifyListeners();
     return persons;
   }
