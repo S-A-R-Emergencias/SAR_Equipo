@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (_) => MainWebPage(),
-          '/login': (_) => MainWebPage(),
+          '/login': (context) => Login(titleName: 'Log In'),
           '/logup': (context) => Logup(titleName: 'Sign Up'),
         },
       ),

@@ -21,6 +21,7 @@ final elevatedButtonStyle = ElevatedButton.styleFrom(
   shadowColor: Color.fromARGB(255, 52, 55, 66),
   backgroundColor: Color.fromARGB(255, 52, 55, 66),
   foregroundColor: Colors.white,
+  padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   elevation: 10.0,
 );
@@ -367,14 +368,7 @@ class _LogupState extends State<Logup> {
                       children: [
                         ButtonTheme(
                           child: TextButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color?>(
-                                      kPrimaryColor),
-                              padding: MaterialStateProperty.all<
-                                      EdgeInsetsGeometry?>(
-                                  const EdgeInsets.all(10)),
-                            ),
+                            style: elevatedButtonStyle,
                             onPressed: () => {
                               logup().then((value) => {
                                     if (value.statusCode == 200 ||
@@ -397,7 +391,7 @@ class _LogupState extends State<Logup> {
                                   }),
                             },
                             child: const Text(
-                              "Registrar Personal",
+                              "Sing Up",
                               style: TextStyle(
                                   color: Color(0xB8F7F7F8),
                                   fontWeight: FontWeight.bold),
@@ -407,7 +401,26 @@ class _LogupState extends State<Logup> {
                         SizedBox(
                           width: 60,
                         ),
-                        _MyButton("Crear"),
+
+                        //Login
+                        ButtonTheme(
+                          child: TextButton(
+                            style: elevatedButtonStyle,
+                            onPressed: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          Login(titleName: 'Log In')))),
+                            },
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Color(0xB8F7F7F8),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
