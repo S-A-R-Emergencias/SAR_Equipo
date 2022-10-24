@@ -15,7 +15,6 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PersonProvider()),
-        ChangeNotifierProvider(create: (_) => PersonnelProvider())
       ],
       child: MaterialApp(
         title: 'Sar Emergencias',
