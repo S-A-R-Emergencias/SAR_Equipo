@@ -6,17 +6,13 @@ import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
-
 final elevatedButtonStyle = ElevatedButton.styleFrom(
-      shadowColor:  Color.fromARGB(255, 52, 55, 66),
-      backgroundColor: Color.fromARGB(255, 52, 55, 66),
-      foregroundColor: Colors.white,
-      shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          elevation: 10.0,
-    );
-
-
+  shadowColor: Color.fromARGB(255, 52, 55, 66),
+  backgroundColor: Color.fromARGB(255, 52, 55, 66),
+  foregroundColor: Colors.white,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  elevation: 10.0,
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,20 +20,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'login', home: const HomePage(titleName: 'Funcionando'));
+        title: 'login', home: const Login(titleName: 'Funcionando'));
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.titleName}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key, required this.titleName}) : super(key: key);
 
   final String titleName; //declared variable
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Login> createState() => _LoginPage();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPage extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -45,8 +41,6 @@ class _HomePageState extends State<HomePage> {
     double _height_container = _height * 0.7;
     double _width_container = _width * 0.6;
     double espacio = 30.0;
-
-   
 
     return Scaffold(
       body: Container(
@@ -70,14 +64,17 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 Container(
-                  width: _width_container*0.467 ,
-                  height: _height,
-                  color: Colors.red,
-                  child: (Center(
-                    child: Image.asset(
-                      "assets/login.jpg", height: _height,width: _width_container*0.468, fit: BoxFit.cover,
-                  ),
-                  ))),
+                    width: _width_container * 0.467,
+                    height: _height,
+                    color: Colors.red,
+                    child: (Center(
+                      child: Image.asset(
+                        "assets/login.jpg",
+                        height: _height,
+                        width: _width_container * 0.468,
+                        fit: BoxFit.cover,
+                      ),
+                    ))),
                 Container(
                   width: _height * 0.53,
                   child: Column(
@@ -111,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 60,
                           ),
-                         _MyButton("Iniciar"),
+                          _MyButton("Iniciar"),
                         ],
                       ),
                     ],
@@ -162,6 +159,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-       
