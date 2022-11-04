@@ -1,6 +1,6 @@
 {
-    "name": "sar_equipo",
-    "short_name": "sar_equipo",
+    "name": "firebase_auth",
+    "short_name": "firebase_auth",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

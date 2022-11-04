@@ -1,4 +1,4 @@
-package com.example.sar_equipo
+package com.example.firebase_auth
 
 import io.flutter.embedding.android.FlutterActivity
 

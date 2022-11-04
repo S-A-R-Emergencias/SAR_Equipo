@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "675850139877",
+    "project_id": "logincharly-9f455",
+    "storage_bucket": "logincharly-9f455.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675850139877:android:232d611588f01d1cda3c0c",
+        "android_client_info": {
+          "package_name": "com.example.Charly_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675850139877-ft4qcasns8ojbvhekv1t7kq8abqlah1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArHdsNws4I9IGbBX2g1u29u775l2Ba1tI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675850139877-ft4qcasns8ojbvhekv1t7kq8abqlah1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

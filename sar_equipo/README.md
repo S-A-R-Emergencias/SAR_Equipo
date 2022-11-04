@@ -1,4 +1,4 @@
-# sar_equipo
+# firebase_auth
 
 A new Flutter project.
 
