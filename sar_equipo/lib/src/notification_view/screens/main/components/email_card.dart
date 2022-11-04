@@ -20,7 +20,8 @@ class EmailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(
+          horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
       child: InkWell(
         onTap: press,
         child: Stack(
@@ -43,7 +44,7 @@ class EmailCard extends StatelessWidget {
                         width: 32,
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage(email.image),
+                          backgroundImage: NetworkImage(email.image),
                         ),
                       ),
                       const SizedBox(width: kDefaultPadding / 2),
@@ -58,7 +59,7 @@ class EmailCard extends StatelessWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: email.subject,
+                                text: email.type,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
@@ -74,14 +75,14 @@ class EmailCard extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            email.time,
+                            email.time.toString(),
                             style:
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: isActive ? Colors.white70 : null,
                                     ),
                           ),
                           const SizedBox(height: 5),
-                          if (email.isAttachmentAvailable)
+                          if (email.isChecked)
                             WebsafeSvg.asset(
                               "assets/Icons/Paperclip.svg",
                               color: isActive ? Colors.white70 : kGrayColor,
@@ -130,7 +131,7 @@ class EmailCard extends StatelessWidget {
             if (email.tagColor != null)
               Positioned(
                 left: -35,
-                top: 6,
+                top: 0,
                 child: WebsafeSvg.asset(
                   "assets/Icons/line.svg",
                   height: 110,

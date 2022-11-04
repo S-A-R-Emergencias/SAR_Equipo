@@ -1,30 +1,38 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/main.dart';
 
 class Email {
-  final String image, name, subject, body, time;
-  final bool isAttachmentAvailable, isChecked;
-  final Color tagColor;
+  String id, image, name, type, body, time;
+  bool normalPanic, isChecked;
+  Color tagColor;
 
   Email(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.image,
-      required this.subject,
-      required this.isAttachmentAvailable,
-      required this.isChecked,
+      required this.type,
+      required this.normalPanic,
       required this.tagColor,
+      required this.isChecked,
       required this.time,
       required this.body});
 }
 
+List<Email> myNotifications = [];
+
+List<Email> sessionNotif = [];
+
 List<Email> emails = List.generate(
   demo_data.length,
   (index) => Email(
+    id: "rgdfg454",
     name: demo_data[index]['name'],
     image: demo_data[index]['image'],
-    subject: demo_data[index]['subject'],
-    isAttachmentAvailable: demo_data[index]['isAttachmentAvailable'],
+    type: demo_data[index]['type'],
+    normalPanic: demo_data[index]['normal_Panic'],
     isChecked: demo_data[index]['isChecked'],
     tagColor: demo_data[index]['tagColor'],
     time: demo_data[index]['time'],
@@ -32,13 +40,13 @@ List<Email> emails = List.generate(
   ),
 );
 
-// ignore: non_constant_identifier_names
+// // ignore: non_constant_identifier_names
 List demo_data = [
   {
     "name": "Jhonn Aguilar",
     "image": "assets/images/user_4.png",
-    "subject": "Incendio",
-    "isAttachmentAvailable": false,
+    "type": "Incendio",
+    "normal_Panic": false,
     "isChecked": true,
     "tagColor": Color.fromARGB(255, 221, 0, 0),
     "time": "Now"
@@ -46,8 +54,8 @@ List demo_data = [
   {
     "name": "Marta Diaz",
     "image": "assets/images/user_2.png",
-    "subject": "Persona atrapada",
-    "isAttachmentAvailable": true,
+    "type": "Persona atrapada",
+    "normal_Panic": true,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "15:32"
@@ -55,8 +63,8 @@ List demo_data = [
   {
     "name": "Marvin Rosa",
     "image": "assets/images/user_3.png",
-    "subject": "Accidente de Coche",
-    "isAttachmentAvailable": true,
+    "type": "Accidente de Coche",
+    "normal_Panic": true,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "14:27",
@@ -64,8 +72,8 @@ List demo_data = [
   {
     "name": "Damian Diaz",
     "image": "assets/images/user_4.png",
-    "subject": "Incendio",
-    "isAttachmentAvailable": false,
+    "type": "Incendio",
+    "normal_Panic": false,
     "isChecked": true,
     "tagColor": Color.fromARGB(255, 221, 0, 0),
     "time": "10:43"
@@ -73,8 +81,8 @@ List demo_data = [
   {
     "name": "Elena Castillo",
     "image": "assets/images/user_5.png",
-    "subject": "Terremoto",
-    "isAttachmentAvailable": false,
+    "type": "Terremoto",
+    "normal_Panic": false,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "9:58"

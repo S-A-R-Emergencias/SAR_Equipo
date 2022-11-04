@@ -8,9 +8,14 @@ import '../../components/components/side_menu.dart';
 import '../../models/Email.dart';
 import 'components/list_of_emails.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,7 +58,7 @@ class MainScreen extends StatelessWidget {
           ),
           Expanded(
             flex: size.width > 1340 ? 8 : 10,
-            child: EmailScreen(email: emails[1]),
+            child: EmailScreen(email: emails[0]),
           ),
         ],
       ),

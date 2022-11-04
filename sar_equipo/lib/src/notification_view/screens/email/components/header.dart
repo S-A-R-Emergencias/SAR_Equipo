@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
+import 'package:sar_equipo/src/notification_view/responsive.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../../../constants.dart';
@@ -14,6 +17,7 @@ class Header extends StatelessWidget {
       padding: const EdgeInsets.all(kDefaultPadding),
       child: Row(
         children: [
+          if (Responsive.isMobile(context)) BackButton(),
           IconButton(
             icon: WebsafeSvg.asset(
               "assets/Icons/Trash.svg",
@@ -46,20 +50,27 @@ class Header extends StatelessWidget {
             onPressed: () {},
           ),
           const Spacer(),
-          IconButton(
-            icon: WebsafeSvg.asset(
-              "assets/Icons/Printer.svg",
-              width: 24,
+          if (Responsive.isDesktop(context))
+            IconButton(
+              icon: WebsafeSvg.asset(
+                "assets/Icons/Printer.svg",
+                width: 24,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
-          ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
             icon: WebsafeSvg.asset(
               "assets/Icons/Markup.svg",
               width: 24,
             ),
-            onPressed: () {},
+            onPressed: () {
+              final docNotification = FirebaseFirestore.instance
+                  .collection('notificacion')
+                  .doc(sessionNotif[0].id);
+
+              docNotification.update({'isChecked': true});
+            },
           ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
