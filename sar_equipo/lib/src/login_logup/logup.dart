@@ -558,7 +558,7 @@ class _LogupState extends State<Logup> {
                   // color: Colors.red,
                   child: (Center(
                     child: Image.asset(
-                      "assets/images/sar.png",
+                      "assets/images/login.jpg",
                       height: _height,
                       width: _width_container * 0.3,
                       fit: BoxFit.cover,

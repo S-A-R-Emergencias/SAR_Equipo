@@ -1,26 +1,26 @@
 // To parse this JSON data, do
 //
-//     final element = elementFromJson(jsonString);
+//     final Element_m = Element_mFromJson(jsonString);
 
 import 'dart:convert';
 
-Element elementFromJson(String str) => Element.fromJson(json.decode(str));
+Element_m Element_mFromJson(String str) => Element_m.fromJson(json.decode(str));
 
-String elementToJson(Element data) => json.encode(data.toJson());
+String Element_mToJson(Element_m data) => json.encode(data.toJson());
 
-class Element {
-    Element({
-         this.id,
-         this.name,
-         this.serialNumber,
-         this.amount,
-         this.description,
-         this.unitOfMeasurement,
-         this.status,
-         this.registerDate,
-         this.lastUpdate,
-         this.user,
-         this.idElementType,
+class Element_m {
+    Element_m({
+      this.id,
+       this.name,
+       this.serialNumber,
+       this.amount,
+       this.description,
+       this.unitOfMeasurement,
+      this.status,
+      this.registerDate,
+      this.lastUpdate,
+       this.user,
+       this.idElementType,
     });
 
     int? id;
@@ -35,7 +35,7 @@ class Element {
     int? user;
     int? idElementType;
 
-    factory Element.fromJson(Map<String, dynamic> json) => Element(
+    factory Element_m.fromJson(Map<String, dynamic> json) => Element_m(
         id: json["id"] == null ? null : json["id"],
         name: json["name"] == null ? null : json["name"],
         serialNumber: json["serialNumber"] == null ? null : json["serialNumber"],
@@ -52,8 +52,8 @@ class Element {
     Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "serialNumber": serialNumber == null ? null : serialNumber,
-        "amount": amount == null ? null : amount,
+        "serialNumber": serialNumber == null ? null : int.parse(serialNumber.toString()),
+        "amount": amount == null ? null : int.parse(amount.toString()),
         "description": description == null ? null : description,
         "unitOfMeasurement": unitOfMeasurement == null ? null : unitOfMeasurement,
         "status": status == null ? null : status,
@@ -73,3 +73,14 @@ class Element {
         "idElementType": idElementType == null ? null : idElementType,
     };
 }
+
+
+
+
+
+
+
+
+
+
+
