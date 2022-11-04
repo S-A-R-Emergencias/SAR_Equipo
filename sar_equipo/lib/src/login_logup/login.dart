@@ -1,22 +1,17 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
-
 final elevatedButtonStyle = ElevatedButton.styleFrom(
-      shadowColor:  Color.fromARGB(255, 52, 55, 66),
-      backgroundColor: Color.fromARGB(255, 52, 55, 66),
-      foregroundColor: Colors.white,
-      shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          elevation: 10.0,
-    );
-
-
+  shadowColor: Color.fromARGB(255, 52, 55, 66),
+  backgroundColor: Color.fromARGB(255, 52, 55, 66),
+  foregroundColor: Colors.white,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  elevation: 10.0,
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -46,8 +41,6 @@ class _HomePageState extends State<HomePage> {
     double _width_container = _width * 0.6;
     double espacio = 30.0;
 
-   
-
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -70,14 +63,17 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               children: [
                 Container(
-                  width: _width_container*0.467 ,
-                  height: _height,
-                  color: Colors.red,
-                  child: (Center(
-                    child: Image.asset(
-                      "assets/login.jpg", height: _height,width: _width_container*0.468, fit: BoxFit.cover,
-                  ),
-                  ))),
+                    width: _width_container * 0.467,
+                    height: _height,
+                    color: Colors.red,
+                    child: (Center(
+                      child: Image.asset(
+                        "assets/login.jpg",
+                        height: _height,
+                        width: _width_container * 0.468,
+                        fit: BoxFit.cover,
+                      ),
+                    ))),
                 Container(
                   width: _height * 0.53,
                   child: Column(
@@ -111,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             width: 60,
                           ),
-                         _MyButton("Iniciar"),
+                          _MyButton("Iniciar"),
                         ],
                       ),
                     ],
@@ -162,6 +158,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-       

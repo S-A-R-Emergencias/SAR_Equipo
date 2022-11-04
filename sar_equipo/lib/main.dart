@@ -29,6 +29,7 @@ class MainApp extends StatelessWidget {
         routes: {
           '/': (_) => MainWebPage(),
           '/login': (_) => MainWebPage(),
+          '/element': (_) => ElementPage()
         },
       ),
     );
