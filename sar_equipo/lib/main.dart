@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
+import 'package:sar_equipo/src/profile/profile_page.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
 import 'package:sar_equipo/src/providers/personnel_provider.dart';
 
@@ -23,7 +24,7 @@ class MainApp extends StatelessWidget {
         title: 'Sar Emergencias',
         initialRoute: '/',
         routes: {
-          '/': (_) => MainWebPage(),
+          '/': (_) => ProfileScreen(),
           '/login': (context) => Login(titleName: 'Log In'),
           '/logup': (context) => Logup(titleName: 'Sign Up'),
         },
