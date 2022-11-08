@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/screens/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/element_model.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
@@ -30,6 +31,8 @@ class MainApp extends StatelessWidget {
           '/': (_) => MainWebPage(),
           '/login': (_) => MainWebPage(),
           '/element': (_) => ElementPage()
+          '/login': (context) => Login(titleName: 'Log In'),
+          '/logup': (context) => Logup(titleName: 'Sign Up'),
         },
       ),
     );

@@ -19,20 +19,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'login', home: const HomePage(titleName: 'Funcionando'));
+        title: 'login', home: const Login(titleName: 'Funcionando'));
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.titleName}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key, required this.titleName}) : super(key: key);
 
   final String titleName; //declared variable
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Login> createState() => _LoginPage();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPage extends State<Login> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
