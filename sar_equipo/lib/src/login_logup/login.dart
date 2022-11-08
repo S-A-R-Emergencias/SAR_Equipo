@@ -27,7 +27,7 @@ class Login extends StatefulWidget {
   const Login({Key? key, required this.titleName}) : super(key: key);
 
   final String titleName; //declared variable
-
+  
   @override
   State<Login> createState() => _LoginPage();
 }
@@ -68,7 +68,7 @@ class _LoginPage extends State<Login> {
                     color: Colors.red,
                     child: (Center(
                       child: Image.asset(
-                        "assets/login.jpg",
+                        "assets/images/login.jpg",
                         height: _height,
                         width: _width_container * 0.468,
                         fit: BoxFit.cover,
