@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sar_equipo/screens/inventory.dart';
 import 'package:provider/provider.dart';
+import 'package:sar_equipo/Models/element_model.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
-import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/product/Producto.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
+import 'package:sar_equipo/src/pages/element_web_page.dart';
+import 'package:sar_equipo/src/providers/element_provider.dart';
+import 'package:sar_equipo/src/providers/elements_provider.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
 import 'package:sar_equipo/src/providers/personnel_provider.dart';
 
@@ -23,12 +26,16 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PersonProvider()),
+        ChangeNotifierProvider(create: (_) => PersonnelProvider()),
+        ChangeNotifierProvider(create: (_) => ElementProvider()),
       ],
       child: MaterialApp(
         title: 'Sar Emergencias',
         initialRoute: '/',
         routes: {
           '/': (_) => MainWebPage(),
+          '/login': (_) => MainWebPage(),
+          '/element': (_) => ElementPage()
           '/login': (context) => Login(titleName: 'Log In'),
           '/logup': (context) => Logup(titleName: 'Sign Up'),
           '/elements': (context) => Product(),//esta no es la interfas
