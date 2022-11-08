@@ -1,33 +1,21 @@
-<<<<<<< Updated upstream
-import 'package:firebase_auth101/login_signup/services/firebase_auth_service.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'widgets/customized_button.dart';
-import 'widgets/customized_textfield.dart';
-import 'login_screen.dart';
-=======
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth101/login_signup/welcome_screen.dart';
 import 'dart:html';
-
 import 'package:firebase_auth101/Models/person_model.dart';
-import 'package:firebase_auth101/login_signup/home_screen.dart';
 import 'package:firebase_auth101/login_signup/services/firebase_auth_service.dart';
 import 'package:firebase_auth101/src/services/element.service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:firebase_auth101/Models/element_model.dart';
 import 'package:firebase_auth101/Models/element_model.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_auth101/src/services/element.service.dart';
 import 'widgets/customized_button.dart';
 import 'widgets/customized_textfield.dart';
 import 'login_screen.dart';
-import 'upDatos.dart';
 import 'package:firebase_auth101/constans.dart';
 import 'package:firebase_auth101/src/services/personnel_service.dart';
-
+import 'upDatos.dart';
+import 'signup_screen.dart';
 
 final elevatedButtonStyle = ElevatedButton.styleFrom(
   shadowColor: Color.fromARGB(255, 52, 55, 66),
@@ -37,88 +25,20 @@ final elevatedButtonStyle = ElevatedButton.styleFrom(
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   elevation: 10.0,
 );
->>>>>>> Stashed changes
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class UpScreen extends StatefulWidget {
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-<<<<<<< Updated upstream
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _sexoController = TextEditingController();
-  final TextEditingController _nacimientoController = TextEditingController();
-  final TextEditingController _carnetController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-                  backgroundColor: Color.fromARGB(255, 255, 115, 0),
-
-          body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  height: 35,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromARGB(255, 0, 0, 0), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios_sharp),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                ),
-              ),
-              Center(
-              child: Text("Registro"),
-              ),             
-              CustomizedTextfield(
-                myController: _usernameController,
-                hintText: "Nombre completo",
-                isPassword: false,  
-              ),  CustomizedTextfield(
-                myController: _sexoController,
-                hintText: "Sexo",
-                isPassword: false,
-              ),
-                CustomizedTextfield(
-                myController: _nacimientoController,
-                hintText: "FechaNacimiento",
-                isPassword: false,
-              ),
-                CustomizedTextfield(
-                myController: _carnetController,
-                hintText: "Carnet",
-                isPassword: false,
-              ),
-              CustomizedTextfield(
-                myController: _emailController,
-                hintText: "Email",
-                isPassword: false,
-              ),
-              CustomizedTextfield(
-                myController: _passwordController,
-                hintText: "Contraseña",
-                isPassword: true,
-              ),
-
-=======
   
+    _UpScreenState createState() => _UpScreenState ();
+
+ Person actualizar;
+ UpScreen(this.actualizar);
+}
+class _UpScreenState extends State<UpScreen>{
+
+    ElementService service = new ElementService();
+
    TextEditingController _emailController = TextEditingController();
    TextEditingController _usernameController = TextEditingController();
    TextEditingController _lastName = TextEditingController();
@@ -144,27 +64,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
             telephone:int.parse(_telephone.text), 
             password: _passwordController.text, 
             role: _role.text);
-                          
-       ElementService service = new ElementService();
 
-        Navigator.pushNamed(context, '/');
-      
+
+              Navigator.pushNamed(context, '/');
+
       }catch(e){
-        _usernameController.text ="error";
-      }    
-    }
-  final formKey = GlobalKey<FormState>(); //key for form
-  String name="";
+        _usernameController.text = e.toString();
+      } 
+    } 
+      int? data;
+
+  final formKey = GlobalKey<FormState>(); //key for form                 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context){
+    _usernameController.text= widget.actualizar.name.toString();
+    _telephone.text= widget.actualizar.telephone.toString();
+    _secondLastName.text= widget.actualizar.secondLastName.toString();
+    _role.text= widget.actualizar.role.toString();
+    _passwordController.text= widget.actualizar.password.toString();
+    _lastName.text= widget.actualizar.lastName.toString();
+    _emailController.text= widget.actualizar.email.toString();
+    _carnetController.text= widget.actualizar.ci.toString();
+    _addres.text= widget.actualizar.address.toString();
+    double espacio =30.00;
+ 
+    final double height= MediaQuery.of(context).size.height;
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     double _height_container = _height * 0.9;
     double _width_container = _width * 0.9;
-    double espacio = 15.0;
 
     return Scaffold(
+      key: _scaffoldKey,
+
         body: Container(
       width: double.infinity,
       height: double.infinity,
@@ -230,14 +164,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: "Carnet:",
                 isPassword: false,               
               ),
->>>>>>> Stashed changes
               CustomizedButton(
                 buttonText: "Registrar",
                 buttonColor: Color.fromARGB(255, 0, 0, 0),
                 textColor: Colors.white,
                 onPressed: () async {
-<<<<<<< Updated upstream
-=======
                                     showDialog(
                     context: context,
                     builder: (context){
@@ -246,7 +177,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       );
                     }
                   );
->>>>>>> Stashed changes
                   try {
                     await FirebaseAuthService().signup(
                         _emailController.text.trim(),
@@ -263,14 +193,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (_) => const LoginScreen()));
                 },
-<<<<<<< Updated upstream
-              ),          
-            ],
-          ),
-        ),
-      )),
-    );
-=======
               ), 
                 
                     
@@ -336,9 +258,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()));
+                              builder: (context) => const LoginScreen()));
                     },
-                    child: const Text("Actualizar datos preciona aqui?",
+                    child: const Text("Recurdas la contraseña preciona aqui?",
                         style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
@@ -371,7 +293,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    ));
->>>>>>> Stashed changes
+    )
+
+
+    );
   }
-}
+ }
