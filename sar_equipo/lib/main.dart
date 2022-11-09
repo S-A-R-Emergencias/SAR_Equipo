@@ -8,6 +8,7 @@ import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/product/Producto.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
+import 'package:sar_equipo/src/profile/profile_page.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/providers/element_provider.dart';
 import 'package:sar_equipo/src/providers/elements_provider.dart';
