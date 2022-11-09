@@ -14,7 +14,6 @@ import '../../Models/personnel_model.dart';
 class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
-  
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -339,6 +338,7 @@ Widget Profile(){
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
                                 children: [
+
                                   SizedBox(
                                     height: 20,
                                   ),
