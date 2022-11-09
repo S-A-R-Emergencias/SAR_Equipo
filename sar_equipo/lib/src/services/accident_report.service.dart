@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sar_equipo/src/global/environment.dart';
 import '../../Models/accident_report_model.dart';
-import 'package:http/http.dart' as http;
 
 class AccidentService{
   Future<List<AccidentReport>> getAll() async {

@@ -4,14 +4,14 @@ import 'package:sar_equipo/src/global/environment.dart';
 import '../../Models/element_model.dart';
 
 class ElementService {
-  Future<List<ElementItem>> getAll() async {
+  Future<List<Element_m>> getAll() async {
     final response = await http.get(Uri.parse('${Environment.apiURL}/element'));
 
     if (response.statusCode == 200 || response.statusCode == 304) {
       final decoded = await json.decode(response.body);
-      var lst = <ElementItem>[];
+      var lst = <Element_m>[];
       for (var element in decoded) {
-        ElementItem ele = ElementItem.fromJson(element);
+        Element_m ele = Element_m.fromJson(element);
         lst.add(ele);
       }
       return lst;
@@ -22,33 +22,35 @@ class ElementService {
   Future<Type> getOneElement(int id) async {
     final response =
         await http.get(Uri.parse('${Environment.apiURL}/element/${id}'));
-    var ele = ElementItem;
+    var ele = Element_m;
     if (response.statusCode == 200 || response.statusCode == 304) {
       final decoded = await json.decode(response.body);
       for (var element in decoded) {
-        ElementItem ele = ElementItem.fromJson(element);
+        Element_m ele = Element_m.fromJson(element);
       }
       return ele;
     }
     return ele;
   }
 
-  Future<http.Response> postElement(ElementItem e) async {
+  Future<http.Response> postElement(Element_m e) async {
     final response = await http.post(Uri.parse('${Environment.apiURL}/element'),
-        body: e.toInsertJson());
+        body: json.encode(e.toInsertJson()),
+        headers: <String,String>{'Content-Type':'application/json; charset=UTF-8' });
     return response;
   }
 
-  Future<http.Response> putElement(ElementItem e) async {
+  Future<http.Response> putElement(Element_m e) async {
     final response = await http.patch(
         Uri.parse('${Environment.apiURL}/element/ ${e.id}'),
-        body: e.toJson());
+        body: json.encode(e.toJson()),
+        headers: <String,String>{'Content-Type':'application/json; charset=UTF-8' });
     return response;
   }
 
-  Future<http.Response> deleteElement(ElementItem e) async {
+  Future<http.Response> deleteElement(Element_m e) async {
     final response =
-        await http.delete(Uri.parse('${Environment.apiURL}/element/ ${e.id}'));
+        await http.delete(Uri.parse('${Environment.apiURL}/element/${e.id}'));
     return response;
   }
 }

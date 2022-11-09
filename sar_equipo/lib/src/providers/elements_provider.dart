@@ -4,8 +4,8 @@ import 'package:sar_equipo/Models/element_model.dart';
 import '../services/element_service.dart';
 
 class ElementsProvider extends ChangeNotifier {
-  List<ElementItem>? elements;
-  Future<List<ElementItem>?> getElements() async {
+  List<Element_m>? elements;
+  Future<List<Element_m>?> getElements() async {
     if (elements != null) {
       return elements;
     }
@@ -15,7 +15,7 @@ class ElementsProvider extends ChangeNotifier {
     return elements;
   }
 
-  Future<List<ElementItem>?> refreshElements() async {
+  Future<List<Element_m>?> refreshElements() async {
     var service = ElementService();
     elements = await service.getAll();
     notifyListeners();

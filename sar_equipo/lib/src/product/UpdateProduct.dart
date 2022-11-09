@@ -2,7 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/element_model.dart';
+import 'package:sar_equipo/src/pages/element_web_page.dart';
+import '../providers/element_provider.dart';
 import '../global/environment.dart';
 import '../services/element.service.dart';
 import 'dart:convert';
@@ -18,7 +21,7 @@ final elevatedButtonStyle = ElevatedButton.styleFrom(
 );
 
 class UpdateProduct extends StatefulWidget{
-
+  ElementProvider? provider;
   Element_m elemento;
   UpdateProduct(this.elemento);
   @override
@@ -29,7 +32,6 @@ class _ElementState extends State<UpdateProduct>{
     
     ElementService service = new ElementService();
 
-    int _id=19;
     TextEditingController _name = new TextEditingController();
     TextEditingController _serialNumber = new TextEditingController();
     TextEditingController _amount= new TextEditingController();
@@ -44,13 +46,14 @@ class _ElementState extends State<UpdateProduct>{
       try{
           // Element_m elEmeneto = await  service.getOneElement(_id);
 
-          Element_m elementM = new Element_m(id: _id, name:_name.text,serialNumber: int.parse(_serialNumber.text),
-        amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
-        user: _user,idElementType:_idElementType);
-
+          Element_m elementM = new Element_m(id: widget.elemento.id , name:_name.text,serialNumber: int.parse(_serialNumber.text),
+          amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
+          user: _user,idElementType:_idElementType);
           var ress = await service.putElement(elementM);
           // String nada ="";
-        Navigator.pushNamed(context, '/elements');
+          ElementProvider.elements = null;
+          Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => ElementPage()));
       
       }catch(e){
         _name.text = e.toString();
@@ -81,7 +84,8 @@ class _ElementState extends State<UpdateProduct>{
 
 //titulo
       appBar: AppBar(
-      centerTitle:true, title: Text ('Registro de UpdateProductos del SAR'),
+      centerTitle:true, title: Text ('Actualización de items del SAR'),
+      backgroundColor: Color.fromARGB(255, 52, 55, 66),
       ),
 
   
@@ -179,7 +183,7 @@ class _ElementState extends State<UpdateProduct>{
                 SizedBox(height: espacio,),
 
               
-                  _MyButton("Update Producto"),
+                  _MyButton("Actualizar Item"),
                   
                           
               ],

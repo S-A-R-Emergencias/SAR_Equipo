@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sar_equipo/Models/element_model.dart';
+import '../providers/element_provider.dart';
 import '../services/element.service.dart';
 
 final elevatedButtonStyle = ElevatedButton.styleFrom(
@@ -39,10 +40,10 @@ class _ProductState extends State<InsertProduct>{
         amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
         user: _user,idElementType:_idElementType);
 
-          ElementService service = new ElementService();
-          var ress = await service.postElement(elementM);
-
-      Navigator.pushNamed(context, '/');
+        ElementService service = new ElementService();
+        var ress = await service.postElement(elementM);
+        ElementProvider.elements = null;
+        Navigator.pushNamed(context, '/element');
       
       }catch(e){
         _name.text ="error";
@@ -65,7 +66,7 @@ class _ProductState extends State<InsertProduct>{
 
 //titulo
       appBar: AppBar(
-      centerTitle:true, title: Text ('Registro de productos del SAR'),
+      centerTitle:true, title: Text ('Registro de items del SAR'),
       ),
 
   

@@ -4,8 +4,8 @@ import '../services/element_service.dart';
 import '../../Models/element_model.dart';
 
 class ElementProvider extends ChangeNotifier {
-  List<ElementItem>? elements;
-  Future<List<ElementItem>?> getElements() async {
+  static List<Element_m>? elements;
+  Future<List<Element_m>?> getElements() async {
     if (elements != null) {
       return elements;
     }
@@ -15,10 +15,22 @@ class ElementProvider extends ChangeNotifier {
     return elements;
   }
 
-  Future<List<ElementItem>?> refreshElements() async {
+  Future<List<Element_m>?> refreshElements() async {
     var service = ElementService();
     elements = await service.getAll();
     notifyListeners();
     return elements;
+  }
+
+  Future<void> create(Element_m m) async {
+    var service = ElementService();
+    await service.postElement(m);
+    notifyListeners();
+  }
+
+  Future<void> update(Element_m m) async {
+    var service = ElementService();
+    await service.putElement(m);
+    notifyListeners();
   }
 }
