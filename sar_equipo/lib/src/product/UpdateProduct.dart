@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/element_model.dart';
+import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import '../providers/element_provider.dart';
 import '../global/environment.dart';
@@ -31,16 +32,26 @@ class _ElementState extends State<UpdateProduct>{
 
     
     ElementService service = new ElementService();
-
     TextEditingController _name = new TextEditingController();
     TextEditingController _serialNumber = new TextEditingController();
     TextEditingController _amount= new TextEditingController();
     TextEditingController _description= new TextEditingController();
     TextEditingController _unitOfMeasurement= new TextEditingController();
-    int _user= 1;
+    int _user = Environment.usersession!.id!;
+    String? imageUrl = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    String path ="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     int _idElementType = 1;
+    final picker = ImagePicker();
+    XFile? pickedFile;
     
-    
+    Widget ElementImage(Element_m e){
+    if(e.image==null){
+      return Image.network(path,width: 200,height: 200,);
+    }
+    else{
+      return Image.memory(base64Decode(e.image.toString()),width: 200,height: 200,);
+    }
+    }
 
     Future<void> updateElement() async{
       try{
@@ -48,7 +59,7 @@ class _ElementState extends State<UpdateProduct>{
 
           Element_m elementM = new Element_m(id: widget.elemento.id , name:_name.text,serialNumber: int.parse(_serialNumber.text),
           amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
-          user: _user,idElementType:_idElementType);
+          user: _user,idElementType:_idElementType, image: widget.elemento.image);
           var ress = await service.putElement(elementM);
           // String nada ="";
           ElementProvider.elements = null;
@@ -67,10 +78,7 @@ class _ElementState extends State<UpdateProduct>{
   final formKey = GlobalKey<FormState>(); //key for form
   @override
   Widget build(BuildContext context){
-
-    // final args = ModalRoute.of(context)!.settings.arguments;
-    // data ??= ModalRoute.of(context)?.settings.arguments as int?;
-    // _description.text = data.toString();
+    imageUrl = widget.elemento.image;
     _name.text= widget.elemento.name.toString();
     _serialNumber.text= widget.elemento.serialNumber.toString();
     _amount.text= widget.elemento.amount.toString();
@@ -79,6 +87,7 @@ class _ElementState extends State<UpdateProduct>{
     double espacio=30.00;
     final double height= MediaQuery.of(context).size.height;
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    
     return Scaffold(
       key: _scaffoldKey,
 
@@ -177,13 +186,26 @@ class _ElementState extends State<UpdateProduct>{
                   focusedBorder: OutlineInputBorder(),
                 ),
               ),
+              ElementImage(widget.elemento),
 
             
 
                 SizedBox(height: espacio,),
 
-              
-                  _MyButton("Actualizar Item"),
+                ElevatedButton(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                    child: Text(
+                      "Cambiar imagen",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  style: elevatedButtonStyle,
+                  onPressed:(){
+                    opciones (context);
+                  },
+                ),
+                _MyButton("Actualizar Item"),
                   
                           
               ],
@@ -208,13 +230,123 @@ class _ElementState extends State<UpdateProduct>{
             ),
           ),
           style: elevatedButtonStyle,
-          onPressed:updateElement,
+          onPressed:(){updateElement();},
         );
       },
     );
   }
-}
 
-// onPressed:() {
-//         Navigator.pushNamed(context, '/Myappdos');
-//       },
+  Future selImagen(op) async{
+      if(op == 1){
+        await picker.pickImage(source: ImageSource.camera).then((value) => pickedFile = value);
+
+      }else{
+        await picker.pickImage(source: ImageSource.gallery).then((value) => pickedFile = value);
+      }
+      if(pickedFile != null ){
+          try{
+            final bytes = await pickedFile!.readAsBytes();
+            imageUrl = base64Encode(bytes);
+            path = pickedFile!.path;
+            widget.elemento.image = imageUrl;
+            setState(() {
+              
+            });
+            
+          } catch (e) {
+            print(e);
+          }
+        }else{
+          SnackBar(
+            content: const Text('No ha seleccionado una imagen'),
+          );
+        }
+      }
+
+  opciones (context){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+        contentPadding: EdgeInsets.all(0),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              InkWell(
+                onTap: (){
+                  selImagen(1);
+
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(width: 1, color: Colors.orange))
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text('Tomar una foto ',  style: TextStyle(
+                          fontSize: 16
+                        ),),
+                        ),
+                        Icon(Icons.camera_alt, color: Colors.orange)
+                    ],
+                    ),
+
+                ),
+              ),
+               InkWell(
+                onTap: (){
+                  selImagen(2);
+                  Navigator.of(context).pop();
+
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20),
+               
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text('Selecciona una foto',  style: TextStyle(
+                          fontSize: 16
+
+                        ),),
+                        ),
+                        Icon(Icons.image, color: Colors.orange)
+                    ],
+                    ),
+
+                ),
+              ),
+               InkWell(
+                onTap: (){
+                  Navigator.of(context).pop();
+
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.red
+                  ),
+
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text('Cancelar',  style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white
+                        ), textAlign:TextAlign.center ),
+                        ),
+                    ],
+                    ),
+                ),
+              )
+            ],
+            ),
+         ),
+
+      );
+    }
+  );
+}
+}

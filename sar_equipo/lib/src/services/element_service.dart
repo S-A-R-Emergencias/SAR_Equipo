@@ -33,11 +33,12 @@ class ElementService {
     return ele;
   }
 
-  Future<http.Response> postElement(Element_m e) async {
+  Future<dynamic> postElement(Element_m e) async {
     final response = await http.post(Uri.parse('${Environment.apiURL}/element'),
         body: json.encode(e.toInsertJson()),
         headers: <String,String>{'Content-Type':'application/json; charset=UTF-8' });
-    return response;
+    final decoded = await json.decode(response.body);
+    return decoded;
   }
 
   Future<http.Response> putElement(Element_m e) async {

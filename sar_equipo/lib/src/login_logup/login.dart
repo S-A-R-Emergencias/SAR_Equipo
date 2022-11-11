@@ -1,7 +1,12 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sar_equipo/Models/personnel_model.dart';
+import 'package:sar_equipo/src/global/environment.dart';
+import 'package:sar_equipo/src/main_web_page.dart';
+import 'package:sar_equipo/src/profile/profile_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,6 +38,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginPage extends State<Login> {
+  TextEditingController _email = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -40,6 +48,20 @@ class _LoginPage extends State<Login> {
     double _height_container = _height * 0.7;
     double _width_container = _width * 0.6;
     double espacio = 30.0;
+    Personnel? p;
+
+    Future<void> login() async {
+      final response = await http.get(Uri.parse('${Environment.apiURL}/personnel/login/${_email.text}/${_password.text}'));//Consulta a api para login
+      if(response.statusCode == 200 || response.statusCode == 304)
+      {
+        var datauser = json.decode(response.body);
+        p = Personnel.fromJson(datauser);
+        Environment.usersession = p;
+      }
+      else {
+        Environment.usersession = null;
+      }
+    }
 
     return Scaffold(
       body: Container(
@@ -88,26 +110,41 @@ class _LoginPage extends State<Login> {
                       SizedBox(
                         height: 100,
                       ),
-                      _MyInput("Correo"),
+                      _MyInput("Correo",_email,false),
                       SizedBox(
                         height: espacio,
                       ),
-                      _MyInput("Contraseña"),
+                      _MyInput("Contraseña",_password,true),
                       SizedBox(
                         height: espacio,
-                      ),
-                      _MyInput("Carnet"),
-                      SizedBox(
-                        height: 50,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _MyButton("Crear"),
-                          SizedBox(
-                            width: 60,
+                          ElevatedButton(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+                              child: Text(
+                                "Iniciar",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            style: elevatedButtonStyle,
+                            onPressed: () {
+                              login().then((value) => {
+                                if(Environment.usersession != null){
+                                  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>  MainWebPage()))),
+                                }
+                                else {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("Email o contraseña incorrectos"),
+                                  ))
+                                }});
+                            },
                           ),
-                          _MyButton("Iniciar"),
                         ],
                       ),
                     ],
@@ -121,38 +158,20 @@ class _LoginPage extends State<Login> {
     );
   }
 
-  Widget _MyInput(String texto) {
+  Widget _MyInput(String texto, TextEditingController controller,bool obscure) {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           width: 400,
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: TextField(
+            obscureText: obscure,
+            controller: controller,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              // icon: Icon(Icons.email),
               hintText: texto,
-              // labelText: 'albertlive.122.com'
             ),
           ),
-        );
-      },
-    );
-  }
-
-  Widget _MyButton(String texto) {
-    return StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return ElevatedButton(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
-            child: Text(
-              texto,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          style: elevatedButtonStyle,
-          onPressed: () {},
         );
       },
     );

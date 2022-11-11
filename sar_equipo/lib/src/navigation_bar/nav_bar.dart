@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sar_equipo/src/global/environment.dart';
+import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
@@ -40,7 +42,6 @@ class DesktopNavBar extends StatelessWidget {
             ),
             const Text(
               "SAR",
-              // ignore: unnecessary_const
               style: TextStyle(
                 fontSize: 40.0,
                 fontWeight: FontWeight.w700,
@@ -49,47 +50,32 @@ class DesktopNavBar extends StatelessWidget {
             ),
             Expanded(child: Container()),
             NavBarButton(onTap: () {}, text: 'Página principal'),
-            NavBarButton(onTap: () {}, text: 'Mapa de Calor'),
-            //NavBarButton ElementPage()
             NavBarButton(
                 onTap: () {
-                  Navigator.push(
+                  if(Environment.usersession!.role == "1")
+                  {
+                    Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const ElementPage()),
-                  );
+                    );
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                  
                 },
                 text: 'Inventario'),
-            NavBarButton(onTap: () {}, text: 'Atendidos'),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Stack(
-                children: <Widget>[
-                  Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: <Color>[
-                            Color.fromRGBO(34, 40, 49, 1),
-                            Color.fromRGBO(34, 40, 49, 1),
-                            Color.fromRGBO(34, 40, 49, 1),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16.0),
-                      primary: Colors.white,
-                      textStyle: const TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {},
-                    child: const Text('Iniciar Sesión'),
-                  ),
-                ],
-              ),
-            ),
+            NavBarButton(onTap: () {
+              Environment.usersession = null;
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Login(titleName: "Login",)),
+                );
+            }, text: 'Cerrar Sesión'),
+            
           ],
         ),
       ),

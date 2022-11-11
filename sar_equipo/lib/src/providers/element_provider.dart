@@ -21,16 +21,4 @@ class ElementProvider extends ChangeNotifier {
     notifyListeners();
     return elements;
   }
-
-  Future<void> create(Element_m m) async {
-    var service = ElementService();
-    await service.postElement(m);
-    notifyListeners();
-  }
-
-  Future<void> update(Element_m m) async {
-    var service = ElementService();
-    await service.putElement(m);
-    notifyListeners();
-  }
 }

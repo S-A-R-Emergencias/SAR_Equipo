@@ -1,14 +1,14 @@
 
 import 'dart:convert';
-import 'dart:io';
-import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/person_model.dart';
 import 'package:sar_equipo/src/global/environment.dart';
+import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
+import 'package:sar_equipo/src/services/personnel_service.dart';
 import '../../Models/personnel_model.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,15 +19,195 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final picker = ImagePicker();
   XFile? pickedFile;
-  Map<String, String> formData = {
-    'image': ''
-  };
+  final TextEditingController oldPasswordController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  PersonnelService service = PersonnelService();
+  
+  
 
   @override
   Widget build(BuildContext context) {
     return Profile();
   }
 
+  void CleanInputs(){
+    newPasswordController.text = "";
+    confirmPasswordController.text = "";
+    oldPasswordController.text="";
+  }
+  //cambio de Contraseña
+  Future<void> SavePassword() async {
+    String newPassword = newPasswordController.text;
+    String confirmPassword = confirmPasswordController.text;
+    String oldPassword = oldPasswordController.text;
+    if((newPassword!= "" && confirmPassword!= "" && oldPassword!="") && (confirmPassword == newPassword && newPassword != oldPassword)){
+      String email = Environment.usersession!.email.toString();
+      final response = await http.get(Uri.parse('${Environment.apiURL}/person/login/${email}/${oldPassword}'));
+      if(response.statusCode == 200 || response.statusCode == 304){
+        service.changePassword(newPassword, Environment.usersession!.id!).then((value) => {
+        if(value.statusCode == 200){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          content: Text("Contraseña actualizada correctamente"))),
+          CleanInputs()
+                                      
+        }
+        else{
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          content: Text("Ha ocurrido un error al actualizar la contraseña")))
+        }
+      });
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          content: Text("La contraseña no coincide con la del usuario")));
+      }
+      
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          content: Text("Las contraseñas no coinciden")));
+    }
+  }
+  //Pop up del cambio de contraseña
+  void ChangePassword() {
+    showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return ClipRRect(
+              borderRadius:
+              BorderRadius.circular(20),
+              child:AlertDialog(
+                contentPadding: EdgeInsets.all(0),
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextField(
+                              obscureText: true,
+                              controller: oldPasswordController,
+                              decoration: InputDecoration(
+                                labelText: "Contraseña Anterior",
+                                border: InputBorder.none,
+                                icon: Icon(Icons.password),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextField(
+                              obscureText: true,
+                              controller: newPasswordController,
+                              decoration: InputDecoration(
+                                labelText: "Contraseña Nueva",
+                                border: InputBorder.none,
+                                icon: Icon(Icons.password),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextField(
+                              obscureText: true,
+                              controller: confirmPasswordController,
+                              decoration: InputDecoration(
+                                labelText: "Confirmar Contraseña",
+                                border: InputBorder.none,
+                                icon: Icon(Icons.password_outlined),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          SavePassword().then((value){
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(40, 54, 84, 1)
+                          ),
+
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text('Guardar',  style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white
+                                ), textAlign:TextAlign.center ),
+                                ),
+                            ],
+                            ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          CleanInputs();
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.red
+                          ),
+
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text('Cancelar',  style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white
+                                ), textAlign:TextAlign.center ),
+                                ),
+                            ],
+                            ),
+                        ),
+                      )
+                    ],
+                    ),
+                ),
+                )
+      );
+    }
+  );}
+  //imagen del perfil
+  Widget ProfileImage(){
+    if(Environment.usersession!.image==null){
+      return Image.network('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',width: 190,fit: BoxFit.fitWidth,);
+    }
+    else{
+      return Image.memory(base64Decode(Environment.usersession!.image.toString()),width: 190,fit: BoxFit.fitWidth,);
+    }
+  }
+  //Agarre de imagen
   Future selImagen(op) async{
   if(op == 1){
     await picker.pickImage(source: ImageSource.camera).then((value) => pickedFile = value);
@@ -38,9 +218,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   if(pickedFile != null ){
       try{
         final bytes = await pickedFile!.readAsBytes();
-        formData['image'] = base64Encode(bytes);
-        final response = await http.post(Uri.parse('${Environment.apiURL}/hostImage/1/personnel'), body: jsonEncode(formData),headers: <String,String>{'Content-Type':'application/json; charset=UTF-8' });
+        Environment.usersession!.image = base64Encode(bytes);
+        final response = await service.putPerson(Environment.usersession!);
         if(response.statusCode == 200 || response.statusCode == 304 || response.statusCode == 201 ){
+          setState(() {});
           SnackBar(
           content: const Text('Foto Actualizada'),);
         }
@@ -53,7 +234,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
-  
 
   opciones (context){
   showDialog(
@@ -79,7 +259,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Expanded(
                         child: Text('Tomar una foto ',  style: TextStyle(
                           fontSize: 16
-
                         ),),
                         ),
                         Icon(Icons.camera_alt, color: Colors.orange)
@@ -142,23 +321,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   );
 }
-  
 
-Widget Profile(){
+  Widget Profile(){
   final personProvider = Provider.of<PersonProvider>(context);
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
-  return FutureBuilder<List<Person>?>(
-    future: personProvider.getPersons(),
-    builder: (_,snapshot) {
-          if(snapshot.hasData){
-            final persons = snapshot.data;
-            final pers = persons![0];
-            
-            return ListView(children: [
+  return ListView(
+              shrinkWrap: true,
+              children: [
               Container(
               color: Color.fromRGBO(34, 40, 49, 1),
-              height: height*1.6,
+              height: height*1.5,
               width: width,
               child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 73),
@@ -185,20 +358,13 @@ Widget Profile(){
                           SizedBox(
                             height: 22,
                           ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            child: Center(
+                          Center(
                               child:
                               Column(
                                 children: [
                                   ClipRRect(
                                   borderRadius: BorderRadius.circular(100.0),
-                                  child: Image.asset(
-                                    '/images/profile.png',
-                                    width: 190 ,
-                                    fit: BoxFit.fitWidth,
-                                    ),
+                                  child: ProfileImage()
                                   ),
                                   TextButton(
                                         style: TextButton.styleFrom(
@@ -208,8 +374,7 @@ Widget Profile(){
                                           textStyle: const TextStyle(fontSize: 20),
                                         ),
                                         onPressed: () {
-                                          opciones(_);
-                                          setState(() {});
+                                          opciones(context);
                                         },
                                         child: const Text('Cambiar Foto'),
                                       ),
@@ -217,20 +382,16 @@ Widget Profile(){
                               )
                               
                             ),
-                          ),
                           SizedBox(
                             height: 22,
                           ),
                           Container(
-                            height: height * 0.43,
+                            height: height * 0.40,
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 double innerHeight = constraints.maxHeight;
                                 double innerWidth = constraints.maxWidth;
-                                return Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      child: Container(
+                                return Container(
                                         height: innerHeight * 0.73,
                                         width: innerWidth,
                                         decoration: BoxDecoration(
@@ -243,7 +404,7 @@ Widget Profile(){
                                               height: 80,
                                             ),
                                             Text(
-                                              "${pers.name} ${pers.lastName} ${pers.secondLastName}",
+                                              "${Environment.usersession!.name} ${Environment.usersession!.lastName} ${Environment.usersession!.secondLastName}",
                                               style: TextStyle(
                                                 color: Color.fromRGBO(34, 40, 49, 1),
                                                 fontFamily: 'Nunito',
@@ -270,7 +431,7 @@ Widget Profile(){
                                                       ),
                                                     ),
                                                     Text(
-                                                      "per.allergies.toString()",
+                                                      Environment.usersession!.allergies ==null? "Sin Alergias": Environment.usersession!.allergies!,
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(34, 40, 49, 1),
                                                         fontFamily: 'Nunito',
@@ -306,7 +467,7 @@ Widget Profile(){
                                                       ),
                                                     ),
                                                     Text(
-                                                      "per.bloodType.toString()",
+                                                      Environment.usersession!.bloodType ==null? "Sin Registrar": Environment.usersession!.bloodType!,
                                                       style: TextStyle(
                                                         color: Color.fromRGBO(34, 40, 49, 1),
                                                         fontFamily: 'Nunito',
@@ -319,8 +480,7 @@ Widget Profile(){
                                             )
                                           ],
                                         ),
-                                      ),
-                                    );
+                                      );
                               },
                             ),
                           ),
@@ -428,7 +588,7 @@ Widget Profile(){
                                       Column(
                                         children: [
                                           Text(
-                                            pers.telephone.toString(),
+                                            Environment.usersession!.telephone!.toString(),
                                             style: TextStyle(
                                               color: Color.fromRGBO(34, 40, 49, 1),
                                               fontFamily: 'Nunito',
@@ -440,7 +600,7 @@ Widget Profile(){
                                             height: 20,
                                           ),
                                           Text(
-                                            pers.email.toString(),
+                                            Environment.usersession!.email!,
                                             style: TextStyle(
                                               color: Color.fromRGBO(34, 40, 49, 1),
                                               fontSize: width<=800? 18:20,
@@ -452,7 +612,7 @@ Widget Profile(){
                                             height: 20,
                                           ),
                                           Text(
-                                            "${pers.birthDate?.day}-${pers.birthDate?.month}-${pers.birthDate?.year}",
+                                            "${Environment.usersession!.birthDate?.day}-${Environment.usersession!.birthDate?.month}-${Environment.usersession!.birthDate?.year}",
                                             style: TextStyle(
                                               color: Color.fromRGBO(34, 40, 49, 1),
                                               fontSize: width<=800? 18:20,
@@ -464,7 +624,7 @@ Widget Profile(){
                                             height: 20,
                                           ),
                                           Text(
-                                            pers.address.toString(),
+                                            Environment.usersession!.address.toString(),
                                             style: TextStyle(
                                               color: Color.fromRGBO(34, 40, 49, 1),
                                               fontSize: width<=800? 18:20,
@@ -512,7 +672,9 @@ Widget Profile(){
                                                     padding: const EdgeInsets.all(20.0),
                                                     textStyle: const TextStyle(fontSize: 20),
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    ChangePassword();
+                                                  },
                                                   child: const Text('Cambiar Contraseña'),
                                                 ),
                                               ],
@@ -565,11 +727,5 @@ Widget Profile(){
                     ),
             )
             ],);
-          }
-          else{
-            return const Center(child:  CircularProgressIndicator());
-          }
-      },
-    );
   }
 }

@@ -11,16 +11,17 @@ String Element_mToJson(Element_m data) => json.encode(data.toJson());
 class Element_m {
     Element_m({
       this.id,
-       this.name,
-       this.serialNumber,
-       this.amount,
-       this.description,
-       this.unitOfMeasurement,
+      this.name,
+      this.serialNumber,
+      this.amount,
+      this.description,
+      this.unitOfMeasurement,
+      this.image,
       this.status,
       this.registerDate,
       this.lastUpdate,
-       this.user,
-       this.idElementType,
+      this.user,
+      this.idElementType,
     });
 
   int? id;
@@ -29,6 +30,7 @@ class Element_m {
   int? amount;
   String? description;
   String? unitOfMeasurement;
+  String? image;
   int? status;
   DateTime? registerDate;
   DateTime? lastUpdate;
@@ -45,6 +47,7 @@ class Element_m {
         unitOfMeasurement: json["unitOfMeasurement"] == null
             ? null
             : json["unitOfMeasurement"],
+        image: json["image"] == null ? null : json["image"],
         status: json["status"] == null ? null : json["status"],
         registerDate: json["registerDate"] == null
             ? null
@@ -65,6 +68,7 @@ class Element_m {
         "description": description == null ? null : description,
         "unitOfMeasurement":
             unitOfMeasurement == null ? null : unitOfMeasurement,
+        "image": image == null ? null : image,
         "status": status == null ? null : status,
         "registerDate": registerDate == null
             ? null
@@ -83,6 +87,7 @@ class Element_m {
         "description": description == null ? null : description,
         "unitOfMeasurement":
             unitOfMeasurement == null ? null : unitOfMeasurement,
+        "image": image == null ? null : image,
         "User": user == null ? null : user,
         "idElementType": idElementType == null ? null : idElementType,
       };

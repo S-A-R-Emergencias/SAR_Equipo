@@ -1,14 +1,17 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sar_equipo/main.dart';
+import 'package:sar_equipo/src/global/environment.dart';
+import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/product/UpdateProduct.dart';
 import '../../Models/element_model.dart';
 import '../providers/element_provider.dart';
-import '../providers/elements_provider.dart';
 import 'package:flutter/services.dart';
 
 import '../services/element_service.dart';
@@ -34,6 +37,7 @@ class _ElementPageState extends State<ElementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 52, 55, 66),
       body: SafeArea(
         child: Stack(children: [
           Column(
@@ -101,7 +105,14 @@ class _ElementPageState extends State<ElementPage> {
       ),
     );
   }
-
+  Widget ElementImage(Element_m e){
+    if(e.image==null){
+      return Image.network('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',width: 200,height: 200,);
+    }
+    else{
+      return Image.memory(base64Decode(e.image.toString()),width: 200,height: 200,);
+    }
+  }
   Card _cardGrid(Element_m element) {
     return Card(
       child: Container(
@@ -109,11 +120,7 @@ class _ElementPageState extends State<ElementPage> {
         child: Row(
           children: [
             Expanded(
-                child: Image.asset(
-              'assets/images/traje.jpg',
-              width: 200,
-              height: 200,
-            )),
+                child: ElementImage(element)),
             Expanded(
                 child: Column(
               
@@ -223,6 +230,7 @@ Row rorButtons(Element_m element, BuildContext context) {
         ),
         onPressed: () {
           _deleteElement(element);
+          ElementProvider.elements = null;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ElementPage()));
         },
