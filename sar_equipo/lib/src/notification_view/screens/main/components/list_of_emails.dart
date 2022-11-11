@@ -14,18 +14,24 @@ import 'email_card.dart';
 import 'package:intl/intl.dart';
 
 Email Cargar(QueryDocumentSnapshot<Object?> not) {
-  Color col;
-  if (not.get("normal_Panic")) {
-    col = Color.fromARGB(255, 255, 0, 0);
-  } else {
-    col = Color.fromARGB(255, 39, 54, 115);
+  Color col = Color.fromARGB(0, 0, 0, 0);
+  switch (not.get("normal_Panic")) {
+    case 0:
+      col = Color.fromARGB(255, 255, 0, 0);
+      break;
+    case 1:
+      col = Color.fromARGB(255, 39, 54, 115);
+      break;
+    case 2:
+      col = Color.fromARGB(255, 0, 0, 0);
+      break;
   }
   Email a = Email(
       id: not.id,
       name: not.get("name").toString(),
       image: not.get("image").toString(),
       type: not.get("type"),
-      normalPanic: not.get("normal_Panic"),
+      normalPanicAnonymous: not.get("normal_Panic"),
       tagColor: col,
       isChecked: not.get("isChecked"),
       time: not.get("time"),
@@ -138,28 +144,29 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                     } else if (snapshot.hasData) {
                       myNotifications.clear();
                       for (var not in snapshot.data!.docs) {
-                        Color col;
-                        if (not.get("normal_Panic")) {
-                          col = Color.fromARGB(255, 255, 0, 0);
-                        } else {
-                          col = Color.fromARGB(255, 39, 54, 115);
-                        }
                         switch (filter) {
                           case 1:
-                            if (!not.get("isChecked"))
+                            if (!not.get("isChecked")) {
                               myNotifications.add(Cargar(not));
+                            }
                             break;
                           case 2:
-                            if (not.get("isChecked"))
+                            if (not.get("isChecked")) {
                               myNotifications.add(Cargar(not));
+                            }
                             break;
                           case 3:
-                            if (not.get("normal_Panic")) {
+                            if (not.get("normal_Panic") == 0) {
                               myNotifications.add(Cargar(not));
                             }
                             break;
                           case 4:
-                            if (!not.get("normal_Panic")) {
+                            if (not.get("normal_Panic") == 1) {
+                              myNotifications.add(Cargar(not));
+                            }
+                            break;
+                          case 5:
+                            if (not.get("normal_Panic") == 2) {
                               myNotifications.add(Cargar(not));
                             }
                             break;

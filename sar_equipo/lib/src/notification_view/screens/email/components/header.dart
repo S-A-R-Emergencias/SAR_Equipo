@@ -23,7 +23,16 @@ class Header extends StatelessWidget {
               "assets/Icons/Trash.svg",
               width: 24,
             ),
-            onPressed: () {},
+            onPressed: () {
+              String i = actual.id;
+              if (actual.id != "") {
+                FirebaseFirestore.instance
+                    .collection("notificacion")
+                    .doc(i)
+                    .delete();
+                Navigator.pushNamed(context, '/');
+              }
+            },
           ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
