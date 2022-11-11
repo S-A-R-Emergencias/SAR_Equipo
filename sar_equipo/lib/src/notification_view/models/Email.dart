@@ -1,53 +1,81 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/main.dart';
 
 class Email {
-  final String image, name, subject, body, time;
-  final bool isAttachmentAvailable, isChecked;
-  final Color tagColor;
+  String id, image, name, type, body, time, mail;
+  bool normalPanic, isChecked;
+  Color tagColor;
+  double latitude, longitude;
 
   Email(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.image,
-      required this.subject,
-      required this.isAttachmentAvailable,
-      required this.isChecked,
+      required this.type,
+      required this.normalPanic,
       required this.tagColor,
+      required this.isChecked,
       required this.time,
-      required this.body});
+      required this.body,
+      required this.latitude,
+      required this.longitude,
+      required this.mail});
 }
+
+List<Email> myNotifications = [];
+
+List<Email> sessionNotif = [];
+
+Email actual = emails[0];
+
+int filter = 2;
+
+int todasN = 0;
+int emergenciasN = 0;
+int reportesN = 0;
+int atendidosN = 0;
+
+bool todas = true;
+bool emergencias = false;
+bool reportes = false;
+bool atendidos = false;
 
 List<Email> emails = List.generate(
   demo_data.length,
   (index) => Email(
-    name: demo_data[index]['name'],
-    image: demo_data[index]['image'],
-    subject: demo_data[index]['subject'],
-    isAttachmentAvailable: demo_data[index]['isAttachmentAvailable'],
-    isChecked: demo_data[index]['isChecked'],
-    tagColor: demo_data[index]['tagColor'],
-    time: demo_data[index]['time'],
-    body: emailDemoText,
-  ),
+      id: "rgdfg454",
+      name: demo_data[index]['name'],
+      image: demo_data[index]['image'],
+      type: demo_data[index]['type'],
+      normalPanic: demo_data[index]['normal_Panic'],
+      isChecked: demo_data[index]['isChecked'],
+      tagColor: demo_data[index]['tagColor'],
+      time: demo_data[index]['time'],
+      body: emailDemoText,
+      latitude: 15.56,
+      longitude: 12,
+      mail: ""),
 );
 
-// ignore: non_constant_identifier_names
+// // ignore: non_constant_identifier_names
 List demo_data = [
   {
-    "name": "Jhonn Aguilar",
-    "image": "assets/images/user_4.png",
-    "subject": "Incendio",
-    "isAttachmentAvailable": false,
-    "isChecked": true,
+    "name": "",
+    "image": "assets/images/anonimo.png",
+    "type": "",
+    "normal_Panic": false,
+    "isChecked": false,
     "tagColor": Color.fromARGB(255, 221, 0, 0),
-    "time": "Now"
+    "time": ""
   },
   {
     "name": "Marta Diaz",
     "image": "assets/images/user_2.png",
-    "subject": "Persona atrapada",
-    "isAttachmentAvailable": true,
+    "type": "Persona atrapada",
+    "normal_Panic": true,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "15:32"
@@ -55,8 +83,8 @@ List demo_data = [
   {
     "name": "Marvin Rosa",
     "image": "assets/images/user_3.png",
-    "subject": "Accidente de Coche",
-    "isAttachmentAvailable": true,
+    "type": "Accidente de Coche",
+    "normal_Panic": true,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "14:27",
@@ -64,8 +92,8 @@ List demo_data = [
   {
     "name": "Damian Diaz",
     "image": "assets/images/user_4.png",
-    "subject": "Incendio",
-    "isAttachmentAvailable": false,
+    "type": "Incendio",
+    "normal_Panic": false,
     "isChecked": true,
     "tagColor": Color.fromARGB(255, 221, 0, 0),
     "time": "10:43"
@@ -73,13 +101,12 @@ List demo_data = [
   {
     "name": "Elena Castillo",
     "image": "assets/images/user_5.png",
-    "subject": "Terremoto",
-    "isAttachmentAvailable": false,
+    "type": "Terremoto",
+    "normal_Panic": false,
     "isChecked": false,
     "tagColor": Color.fromARGB(255, 81, 84, 83),
     "time": "9:58"
   }
 ];
 
-String emailDemoText =
-    "Auxilio!!, Necesito su ayuda de inmediato tenemos una emergencia. Mi casa esta en llamas debido a una fuga de gas, Aun hay gente dentro del lugar, no se su estado pero lleguen lo antes posible";
+String emailDemoText = "";

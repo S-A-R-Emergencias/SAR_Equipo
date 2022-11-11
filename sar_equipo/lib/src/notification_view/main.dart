@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const MainScreen(),
+      home: MainScreen(emailDefault: emails[0]),
     );
   }
 }

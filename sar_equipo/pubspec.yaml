@@ -21,12 +21,18 @@ dependencies:
   get: ^4.3.8
   provider: ^6.0.3
   http: ^0.13.5
+  firebase_core:
+  cloud_firestore:
+  firebase_auth:
 
   google_fonts: ^3.0.1
   flutter_svg: ^1.1.4
   websafe_svg: ^2.1.2+3
   flutter_staggered_grid_view: ^0.6.2
   transparent_image: ^2.0.0
+  firebase_database: 
+  firebase_core_platform_interface:
+  syncfusion_flutter_maps: ^20.3.52
   dio: ^4.0.6
 
 dev_dependencies:
