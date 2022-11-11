@@ -32,6 +32,7 @@ dependencies:
   transparent_image:
   firebase_database: 
   firebase_core_platform_interface:
+  syncfusion_flutter_maps: ^20.3.52
   
 
 dev_dependencies:

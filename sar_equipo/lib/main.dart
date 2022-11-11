@@ -51,7 +51,10 @@ void getNotifications() async {
         tagColor: col,
         isChecked: notification.get("isChecked"),
         time: notification.get("time"),
-        body: notification.get("body").toString()));
+        body: notification.get("body").toString(),
+        latitude: notification.get("latitude"),
+        longitude: notification.get("longitude"),
+        mail: notification.get("mail")));
   }
 }
 
@@ -78,7 +81,7 @@ class _MainAppState extends State<MainApp> {
         title: 'Sar Emergencias',
         initialRoute: '/',
         routes: {
-          '/': (_) => MainScreen(),
+          '/': (_) => MainScreen(emailDefault: emails[0]),
           '/login': (context) => Login(titleName: 'Log In'),
           '/logup': (context) => Logup(titleName: 'Sign Up'),
         },

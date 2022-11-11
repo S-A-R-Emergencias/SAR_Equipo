@@ -9,7 +9,12 @@ import '../../models/Email.dart';
 import 'components/list_of_emails.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({
+    Key? key,
+    required this.emailDefault,
+  }) : super(key: key);
+
+  final Email emailDefault;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -42,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           Expanded(
             flex: 9,
-            child: EmailScreen(email: emails[0]),
+            child: EmailScreen(email: widget.emailDefault),
           ),
         ],
       ),
@@ -58,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           Expanded(
             flex: size.width > 1340 ? 8 : 10,
-            child: EmailScreen(email: emails[0]),
+            child: EmailScreen(email: widget.emailDefault),
           ),
         ],
       ),

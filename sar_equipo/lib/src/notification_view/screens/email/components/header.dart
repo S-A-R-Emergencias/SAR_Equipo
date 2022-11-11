@@ -70,6 +70,7 @@ class Header extends StatelessWidget {
                   .doc(sessionNotif[0].id);
 
               docNotification.update({'isChecked': true});
+              Navigator.pop(context);
             },
           ),
           const SizedBox(width: kDefaultPadding / 2),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
+import 'package:sar_equipo/src/notification_view/screens/main/components/list_of_emails.dart';
 //import 'package:notifications_sar/extensions.dart';
 import 'package:sar_equipo/src/notification_view/extensions.dart';
+import 'package:sar_equipo/src/notification_view/responsive.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../../constants.dart';
@@ -19,9 +22,18 @@ class SideMenu extends StatelessWidget {
       color: kBgLightColor,
       child: Column(
         children: [
-          Image.asset(
-            "assets/images/sar.png",
-            width: 46,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/sar.png",
+                width: 46,
+              ),
+              if (Responsive.isMobile(context) || Responsive.isTablet(context))
+                Spacer(),
+              if (Responsive.isMobile(context) || Responsive.isTablet(context))
+                CloseButton()
+            ],
           ),
           const SizedBox(height: kDefaultPadding),
           ElevatedButton.icon(
@@ -49,33 +61,61 @@ class SideMenu extends StatelessWidget {
           const SizedBox(height: kDefaultPadding * 2),
           // Menu Items
           SideMenuItem(
-            press: () {},
-            title: "Reportes",
+            press: () {
+              todas = true;
+              emergencias = false;
+              reportes = false;
+              atendidos = false;
+              filter = 2;
+              Navigator.pushNamed(context, '/');
+            },
+            title: "Todas",
             iconSrc: "assets/Icons/Inbox.svg",
-            isActive: true,
-            itemCount: 3,
+            isActive: todas,
+            itemCount: 1,
           ),
           SideMenuItem(
-            press: () {},
+            press: () {
+              todas = false;
+              emergencias = true;
+              reportes = false;
+              atendidos = false;
+              filter = 3;
+              Navigator.pushNamed(context, '/');
+            },
             title: "Emergencias",
             iconSrc: "assets/Icons/Send.svg",
-            isActive: false,
-            itemCount: 3,
+            isActive: emergencias,
+            itemCount: 2,
           ),
           SideMenuItem(
-            press: () {},
-            title: "Similares",
+            press: () {
+              todas = false;
+              emergencias = false;
+              reportes = true;
+              atendidos = false;
+              filter = 4;
+              Navigator.pushNamed(context, '/');
+            },
+            title: "Reportes",
             iconSrc: "assets/Icons/File.svg",
-            isActive: false,
+            isActive: reportes,
             itemCount: 3,
           ),
           SideMenuItem(
-            press: () {},
+            press: () {
+              todas = false;
+              emergencias = false;
+              reportes = false;
+              atendidos = true;
+              filter = 2;
+              Navigator.pushNamed(context, '/');
+            },
             title: "Atendidos",
             iconSrc: "assets/Icons/Trash.svg",
-            isActive: false,
+            isActive: atendidos,
             showBorder: false,
-            itemCount: 3,
+            itemCount: 4,
           ),
 
           const SizedBox(height: kDefaultPadding * 2),

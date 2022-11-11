@@ -7,13 +7,62 @@ import '../../constants.dart';
 import 'components/header.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class EmailScreen extends StatelessWidget {
+import 'package:syncfusion_flutter_maps/maps.dart';
+
+class EmailScreen extends StatefulWidget {
   const EmailScreen({
     Key? key,
     required this.email,
   }) : super(key: key);
 
   final Email email;
+
+  @override
+  State<EmailScreen> createState() => _EmailScreenState();
+}
+
+late MapZoomPanBehavior _zoomPanBehavior;
+late MapTileLayerController _controller;
+late MapLatLng _markerPosition;
+//TextEditingController descriptionController = TextEditingController();
+final descriptionController = TextEditingController();
+
+double latitude = 0;
+double longitude = 0;
+
+void updateMarkerChange(Offset position) {
+  _markerPosition = _controller.pixelToLatLng(position);
+  latitude = _markerPosition.latitude;
+  longitude = _markerPosition.longitude;
+  if (_controller.markersCount > 0) {
+    _controller.clearMarkers();
+  }
+  _controller.insertMarker(0);
+}
+
+class _CustomZoomPanBehavior extends MapZoomPanBehavior {
+  _CustomZoomPanBehavior();
+  late MapTapCallback onTap;
+
+  @override
+  void handleEvent(PointerEvent event) {
+    if (event is PointerUpEvent) {
+      onTap(event.localPosition);
+    }
+    super.handleEvent(event);
+  }
+}
+
+typedef MapTapCallback = void Function(Offset position);
+
+class _EmailScreenState extends State<EmailScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    _zoomPanBehavior = _CustomZoomPanBehavior()..onTap = updateMarkerChange;
+    _controller = MapTileLayerController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +83,7 @@ class EmailScreen extends StatelessWidget {
                       CircleAvatar(
                         maxRadius: 24,
                         backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(email.image),
+                        backgroundImage: NetworkImage(widget.email.image),
                       ),
                       SizedBox(width: kDefaultPadding),
                       Expanded(
@@ -50,14 +99,15 @@ class EmailScreen extends StatelessWidget {
                                     children: [
                                       Text.rich(
                                         TextSpan(
-                                          text: email.name,
+                                          text: widget.email.name,
                                           style: Theme.of(context)
                                               .textTheme
                                               .button,
                                           children: [
                                             TextSpan(
-                                                text:
-                                                    "  <jhonn.atkins@gmail.com>\n",
+                                                text: "     " +
+                                                    widget.email.mail +
+                                                    "\n",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .caption),
@@ -65,7 +115,7 @@ class EmailScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        email.type,
+                                        widget.email.type,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -75,7 +125,7 @@ class EmailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(width: kDefaultPadding / 2),
                                 Text(
-                                  "Hora " + email.time,
+                                  "Hora " + widget.email.time,
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                               ],
@@ -90,7 +140,7 @@ class EmailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      email.body,
+                                      widget.email.body,
                                       style: TextStyle(
                                         height: 1.5,
                                         color: Color(0xFF4D5875),
@@ -101,7 +151,7 @@ class EmailScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          email.normalPanic
+                                          widget.email.normalPanic
                                               ? "Emergencia"
                                               : "Reporte",
                                           style: TextStyle(fontSize: 12),
@@ -123,30 +173,37 @@ class EmailScreen extends StatelessWidget {
                                     ),
                                     Divider(thickness: 1),
                                     SizedBox(height: kDefaultPadding / 2),
-                                    SizedBox(
-                                      height: 200,
-                                      // child: StaggeredGridView.countBuilder(
-                                      //   physics: NeverScrollableScrollPhysics(),
-                                      //   crossAxisCount: 4,
-                                      //   itemCount: 3,
-                                      //   itemBuilder:
-                                      //       (BuildContext context, int index) =>
-                                      //           ClipRRect(
-                                      //     borderRadius: BorderRadius.circular(8),
-                                      //     child: Image.asset(
-                                      //       "assets/images/Img_$index.png",
-                                      //       fit: BoxFit.cover,
-                                      //     ),
-                                      //   ),
-                                      //   staggeredTileBuilder: (int index) =>
-                                      //       StaggeredTile.count(
-                                      //     2,
-                                      //     index.isOdd ? 2 : 1,
-                                      //   ),
-                                      //   mainAxisSpacing: kDefaultPadding,
-                                      //   crossAxisSpacing: kDefaultPadding,
-                                      // ),
-                                    )
+                                    Container(
+                                        width: 600,
+                                        height: 400,
+                                        child: SfMaps(
+                                          layers: [
+                                            MapTileLayer(
+                                              urlTemplate:
+                                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                              initialFocalLatLng: MapLatLng(
+                                                  widget.email.latitude,
+                                                  widget.email.longitude),
+                                              initialZoomLevel: 14,
+                                              zoomPanBehavior: _zoomPanBehavior,
+                                              controller: _controller,
+                                              markerBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return MapMarker(
+                                                    latitude:
+                                                        widget.email.latitude,
+                                                    longitude:
+                                                        widget.email.longitude,
+                                                    child: Icon(
+                                                      Icons.location_on,
+                                                      color: Colors.red,
+                                                      size: 30,
+                                                    ));
+                                              },
+                                            ),
+                                          ],
+                                        )),
                                   ],
                                 ),
                               ),
