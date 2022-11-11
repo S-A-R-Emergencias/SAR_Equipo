@@ -2,12 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sar_equipo/screens/inventory.dart';
 import 'package:provider/provider.dart';
+import 'Models/element_model.dart';
+import 'src/product/UpdateProduct.dart';
+import 'package:sar_equipo/Models/element_model.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
+import 'package:sar_equipo/src/product/InsertProduct.dart';
+import 'package:sar_equipo/src/pages/element_web_page.dart';
+import 'package:sar_equipo/src/providers/element_provider.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
 import 'package:sar_equipo/src/providers/personnel_provider.dart';
 import 'package:sar_equipo/src/notification_view/models/Email.dart';
@@ -25,8 +30,6 @@ Future<void> main() async {
           appId: "1:47517749067:web:f47bc2d3588c44a3d6a2ce",
           measurementId: "G-SG9JVRT773"));
   getNotifications();
-  runApp(MainApp());
-}
 
 void getNotifications() async {
   myNotifications.clear();
@@ -82,16 +85,24 @@ class _MainAppState extends State<MainApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PersonProvider()),
+        ChangeNotifierProvider(create: (_) => PersonnelProvider()),
+        ChangeNotifierProvider(create: (_) => ElementProvider()),
       ],
       child: MaterialApp(
         title: 'Sar Emergencias',
         initialRoute: '/',
         routes: {
-          '/': (_) => MainScreen(emailDefault: emails[0]),
+          //'/': (_) => MainScreen(emailDefault: emails[0]),
+          '/': (_) => Login(titleName: 'Log In'),
+          '/element': (_) => ElementPage(),
           '/login': (context) => Login(titleName: 'Log In'),
           '/logup': (context) => Logup(titleName: 'Sign Up'),
+          '/elementInsert': (context) => InsertProduct(),
+          '/elementUpdate':(context)=> UpdateProduct(new Element_m()),
+          
         },
       ),
     );
   }
 }
+

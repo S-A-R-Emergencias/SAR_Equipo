@@ -23,6 +23,7 @@ class Personnel {
     this.lastUpdate,
     this.password,
     this.role,
+    this.image,
     this.grade,
     this.bloodType,
     this.allergies,
@@ -41,6 +42,7 @@ class Personnel {
   DateTime? lastUpdate;
   String? password;
   String? role;
+  String? image;
   String? grade;
   String? bloodType;
   String? allergies;
@@ -66,6 +68,7 @@ class Personnel {
             : DateTime.parse(json["lastUpdate"]),
         password: json["password"] == null ? null : json["password"],
         role: json["role"] == null ? null : json["role"],
+        image: json["image"] == null ? null : json["image"],
         grade: json["grade"] == null ? null : json["grade"],
         bloodType: json["bloodType"] == null ? null : json["bloodType"],
         allergies: json["allergies"] == null ? null : json["allergies"],
@@ -78,7 +81,7 @@ class Personnel {
         "secondLastName": secondLastName == null ? null : secondLastName,
         "ci": ci == null ? null : ci,
         "address": address == null ? null : address,
-        "birthDate": birthDate == null ? null : birthDate?.toIso8601String(),
+        "birthDate": birthDate == null ? null : birthDate!.year.toString()+'-'+ birthDate!.month.toString()+'-'+ birthDate!.day.toString(),
         "email": email == null ? null : email,
         "telephone": telephone == null ? null : telephone,
         "registerDate":
@@ -86,6 +89,7 @@ class Personnel {
         "lastUpdate": lastUpdate == null ? null : lastUpdate?.toIso8601String(),
         "password": password == null ? null : password,
         "role": role == null ? null : role,
+        "image": image == null ? null : image,
         "grade": grade == null ? null : grade,
         "bloodType": bloodType == null ? null : bloodType,
         "allergies": allergies == null ? null : allergies,
@@ -97,11 +101,12 @@ class Personnel {
         "secondLastName": secondLastName == null ? null : secondLastName,
         "ci": ci == null ? null : ci,
         "address": address == null ? null : address,
-        "birthDate": birthDate == null ? null : birthDate?.toIso8601String(),
+        "birthDate": birthDate == null ? null : birthDate!.year.toString()+'-'+ birthDate!.month.toString()+'-'+ birthDate!.day.toString(),
         "email": email == null ? null : email,
         "telephone": telephone == null ? null : telephone,
         "password": password == null ? null : password,
         "role": role == null ? null : role,
+        "image": image == null ? null : image,
         "grade": grade == null ? null : grade,
         "bloodType": bloodType == null ? null : bloodType,
         "allergies": allergies == null ? null : allergies,
