@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sar_equipo/Models/person_model.dart';
 import '../services/person_service.dart';
 
-class PersonProvider extends ChangeNotifier{
+class PersonProvider extends ChangeNotifier {
   List<Person>? persons;
   Future<List<Person>?> getPersons() async {
-    if(persons != null){
+    if (persons != null) {
       return persons;
     }
     var service = PersonService();

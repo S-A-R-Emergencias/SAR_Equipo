@@ -14,26 +14,25 @@ dependencies:
   
   url_launcher: 
   url_strategy: 
-  hooks_riverpod:
+  hooks_riverpod: 
   image_picker: 
-  image_cropper:
-  cupertino_icons:
-  provider:
-  http:
+  image_cropper: 
+  cupertino_icons: 
+  get: 
+  provider: 
+  http: 
   firebase_core:
   cloud_firestore:
   firebase_auth:
 
-
-  google_fonts:
-  flutter_svg:
-  websafe_svg:
-  flutter_staggered_grid_view:
-  transparent_image:
+  google_fonts: 
+  flutter_svg: 
+  websafe_svg: 
+  flutter_staggered_grid_view: 
+  transparent_image: 
   firebase_database: 
   firebase_core_platform_interface:
-  syncfusion_flutter_maps: ^20.3.52
-  
+  syncfusion_flutter_maps: 
 
 dev_dependencies:
   flutter_test:
