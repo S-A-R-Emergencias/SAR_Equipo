@@ -30,6 +30,8 @@ final descriptionController = TextEditingController();
 double latitude = 0;
 double longitude = 0;
 
+String typeERA = "";
+
 void updateMarkerChange(Offset position) {
   _markerPosition = _controller.pixelToLatLng(position);
   latitude = _markerPosition.latitude;
@@ -61,6 +63,18 @@ class _EmailScreenState extends State<EmailScreen> {
     // TODO: implement initState
     _zoomPanBehavior = _CustomZoomPanBehavior()..onTap = updateMarkerChange;
     _controller = MapTileLayerController();
+    switch (widget.email.normalPanicAnonymous) {
+      case 0:
+        typeERA = "Emergencia";
+        break;
+      case 1:
+        typeERA = "Reportes";
+        break;
+      case 2:
+        typeERA = "Anonimo";
+        break;
+    }
+    actual = widget.email;
     super.initState();
   }
 
@@ -151,9 +165,7 @@ class _EmailScreenState extends State<EmailScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          widget.email.normalPanic
-                                              ? "Emergencia"
-                                              : "Reporte",
+                                          typeERA,
                                           style: TextStyle(fontSize: 12),
                                         ),
                                         Spacer(),
