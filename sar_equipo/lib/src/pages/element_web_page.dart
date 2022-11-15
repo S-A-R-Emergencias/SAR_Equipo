@@ -36,6 +36,9 @@ class _ElementPageState extends State<ElementPage> {
   
   @override
   Widget build(BuildContext context) {
+    if(Environment.usersession == null){
+      return Login(titleName: 'Log In');
+    }else{
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 52, 55, 66),
       body: SafeArea(
@@ -56,14 +59,16 @@ class _ElementPageState extends State<ElementPage> {
               padding: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
                   Row(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                    IconButton(
+                    iconSize: 50,
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      },
+                    ),
+                    Container(width: 100,),
                     Title(
                       color: Colors.white,
                       child: Text(
@@ -74,6 +79,8 @@ class _ElementPageState extends State<ElementPage> {
                             color: Colors.white),
                       ),
                     ),
+                    Container(width: 100,),
+                    
                     SizedBox(width: 30,),
                     ElevatedButton(
                         child: Container(
@@ -104,6 +111,7 @@ class _ElementPageState extends State<ElementPage> {
         ]),
       ),
     );
+    }
   }
   Widget ElementImage(Element_m e){
     if(e.image==null){
@@ -182,38 +190,6 @@ class _ElementPageState extends State<ElementPage> {
           return const Center(child: CircularProgressIndicator());
         }
       },
-    );
-  }
-
-  Widget _card(Element_m element) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 170,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black26,
-                blurRadius: 3,
-                offset: Offset(0, 5),
-                spreadRadius: 3)
-          ]),
-      child: Column(children: [
-        Container(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(element.name.toString(),
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(element.description.toString(),
-                    style: TextStyle(fontSize: 15)),
-              ],
-            ))
-      ]),
     );
   }
 }

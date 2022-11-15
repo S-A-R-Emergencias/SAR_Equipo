@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/person_model.dart';
 import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
+import 'package:sar_equipo/src/profile/edit_info.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
 import 'package:sar_equipo/src/services/personnel_service.dart';
 import '../../Models/personnel_model.dart';
@@ -28,7 +29,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if(Environment.usersession == null){
+      return Login(titleName: 'Log In');
+    }else{
     return Profile();
+    }
   }
 
   void CleanInputs(){
@@ -706,7 +711,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     padding: const EdgeInsets.all(20.0),
                                                     textStyle: const TextStyle(fontSize: 20),
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => EditInfo(titleName:'Editar', personnelSend: Environment.usersession,)));
+                                                  },
                                                   child: const Text('Editar Perfil'),
                                                 ),
                                               ],

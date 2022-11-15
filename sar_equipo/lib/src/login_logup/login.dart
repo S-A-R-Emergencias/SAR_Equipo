@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:sar_equipo/Models/personnel_model.dart';
 import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
+import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
 import 'package:sar_equipo/src/profile/profile_page.dart';
 
 void main() => runApp(MyApp());
@@ -133,10 +135,7 @@ class _LoginPage extends State<Login> {
                             onPressed: () {
                               login().then((value) => {
                                 if(Environment.usersession != null){
-                                  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>  MainWebPage()))),
+                                  Navigator.pushNamed(context, '/notification')
                                 }
                                 else {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

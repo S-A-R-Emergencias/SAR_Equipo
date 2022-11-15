@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/notification_view/models/Email.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/components/list_of_emails.dart';
 //import 'package:notifications_sar/extensions.dart';
@@ -25,10 +28,7 @@ class SideMenu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/images/sar.png",
-                width: 46,
-              ),
+              ProfileImage(),
               if (Responsive.isMobile(context) || Responsive.isTablet(context))
                 Spacer(),
               if (Responsive.isMobile(context) || Responsive.isTablet(context))
@@ -37,11 +37,14 @@ class SideMenu extends StatelessWidget {
           ),
           const SizedBox(height: kDefaultPadding),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Environment.usersession = null;
+              Navigator.pushNamed(context, '/');
+            },
             icon: WebsafeSvg.asset("assets/Icons/Reply.svg",
                 width: 16, color: Colors.white),
             label: const Text(
-              "Login",
+              "Logout",
               style: TextStyle(color: Colors.white),
             ),
           ).addNeumorphism(
@@ -50,11 +53,13 @@ class SideMenu extends StatelessWidget {
           ),
           const SizedBox(height: kDefaultPadding),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile');
+            },
             icon: WebsafeSvg.asset("assets/Icons/Inbox.svg",
                 width: 16, color: Colors.white),
             label: const Text(
-              "Home",
+              "Perfil",
               style: TextStyle(color: Colors.white),
             ),
           ).addNeumorphism(),
@@ -67,7 +72,7 @@ class SideMenu extends StatelessWidget {
               reportes = false;
               atendidos = false;
               filter = 2;
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/notification');
             },
             title: "Todas",
             iconSrc: "assets/Icons/Inbox.svg",
@@ -81,7 +86,7 @@ class SideMenu extends StatelessWidget {
               reportes = false;
               atendidos = false;
               filter = 3;
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/notification');
             },
             title: "Emergencias",
             iconSrc: "assets/Icons/Send.svg",
@@ -95,7 +100,7 @@ class SideMenu extends StatelessWidget {
               reportes = true;
               atendidos = false;
               filter = 4;
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/notification');
             },
             title: "Reportes",
             iconSrc: "assets/Icons/File.svg",
@@ -109,7 +114,7 @@ class SideMenu extends StatelessWidget {
               reportes = false;
               atendidos = true;
               filter = 2;
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/notification');
             },
             title: "Atendidos",
             iconSrc: "assets/Icons/Trash.svg",
@@ -117,11 +122,34 @@ class SideMenu extends StatelessWidget {
             showBorder: false,
             itemCount: 4,
           ),
+          SideMenuItem(
+            press: () {
+              todas = false;
+              emergencias = false;
+              reportes = false;
+              atendidos = false;
+              filter = 2;
+              Navigator.pushNamed(context, '/element');
+            },
+            title: "Inventario",
+            iconSrc: "assets/Icons/Transfer.svg",
+            isActive: atendidos,
+            showBorder: false,
+            itemCount: 5,
+          ),
 
           const SizedBox(height: kDefaultPadding * 2),
           // Tags
         ],
       ),
     );
+  }
+  Widget ProfileImage(){
+    if(Environment.usersession!.image==null){
+      return Image.network('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',width: 50,fit: BoxFit.fitWidth,);
+    }
+    else{
+      return Image.memory(base64Decode(Environment.usersession!.image.toString()),width: 50,fit: BoxFit.fitWidth,);
+    }
   }
 }

@@ -139,10 +139,12 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                       myNotifications.clear();
                       for (var not in snapshot.data!.docs) {
                         Color col;
-                        if (not.get("normal_Panic")) {
+                        if (not.get("normal_Panic")==0) {
                           col = Color.fromARGB(255, 255, 0, 0);
-                        } else {
+                        } else if (not.get("normal_Panic")==1){
                           col = Color.fromARGB(255, 39, 54, 115);
+                        }else if (not.get("normal_Panic")==2){
+                          col = Color.fromARGB(255, 0, 0, 0);
                         }
                         switch (filter) {
                           case 1:
