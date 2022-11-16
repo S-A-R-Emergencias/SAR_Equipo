@@ -57,7 +57,7 @@ class _ElementState extends State<UpdateProduct>{
       try{
           // Element_m elEmeneto = await  service.getOneElement(_id);
 
-          Element_m elementM = new Element_m(id: widget.elemento.id , name:_name.text,serialNumber: int.parse(_serialNumber.text),
+          Element_m elementM = new Element_m(id: widget.elemento.id , name:_name.text,serialNumber: _serialNumber.text,
           amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
           user: _user,idElementType:_idElementType, image: widget.elemento.image);
           var ress = await service.putElement(elementM);

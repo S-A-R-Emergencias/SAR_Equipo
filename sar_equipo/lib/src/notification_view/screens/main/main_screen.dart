@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:sar_equipo/src/global/environment.dart';
+import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/notification_view/responsive.dart';
 import 'package:sar_equipo/src/notification_view/screens/email/email_screen.dart';
 import '../../components/components/side_menu.dart';
@@ -24,20 +26,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    if(Environment.usersession == null){
+      return Login(titleName: 'Log In');
+    }else{
     return Scaffold(
         body: Responsive(
       mobile: Expanded(
         flex: 6,
         child: ListOfEmails(),
-      ), //Row(
-      //   // ignore: prefer_const_literals_to_create_immutables
-      //   children: [
-      //     Expanded(
-      //       flex: 6,
-      //       child: ListOfEmails(),
-      //     ),
-      //   ],
-      // ),
+      ), 
       tablet: Row(
         // ignore: prefer_const_literals_to_create_immutables
         children: [
@@ -67,6 +64,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-    ));
+    ));}
   }
 }

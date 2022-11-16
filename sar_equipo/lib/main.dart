@@ -3,14 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Models/element_model.dart';
-import 'src/product/UpdateProduct.dart';
-import 'package:sar_equipo/Models/element_model.dart';
+import 'package:sar_equipo/src/profile/edit_info.dart';
+import 'package:sar_equipo/src/providers/elementtype.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
-import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/providers/element_provider.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
@@ -30,7 +28,8 @@ Future<void> main() async {
           appId: "1:47517749067:web:f47bc2d3588c44a3d6a2ce",
           measurementId: "G-SG9JVRT773"));
   getNotifications();
-
+  runApp(MainApp());
+}
 void getNotifications() async {
   myNotifications.clear();
   CollectionReference collectionReference =
@@ -87,19 +86,20 @@ class _MainAppState extends State<MainApp> {
         ChangeNotifierProvider(create: (_) => PersonProvider()),
         ChangeNotifierProvider(create: (_) => PersonnelProvider()),
         ChangeNotifierProvider(create: (_) => ElementProvider()),
+        ChangeNotifierProvider(create: (_) => ElementTypeProvider()),
       ],
       child: MaterialApp(
         title: 'Sar Emergencias',
         initialRoute: '/',
         routes: {
-          //'/': (_) => MainScreen(emailDefault: emails[0]),
-          '/': (_) => Login(titleName: 'Log In'),
-          '/element': (_) => ElementPage(),
-          '/login': (context) => Login(titleName: 'Log In'),
-          '/logup': (context) => Logup(titleName: 'Sign Up'),
-          '/elementInsert': (context) => InsertProduct(),
-          '/elementUpdate':(context)=> UpdateProduct(new Element_m()),
           
+          '/': (_) => Login(titleName: 'Log In'),
+          '/notification': (_) => MainScreen(emailDefault: emails[0]),
+          '/profile': (_) => MainWebPage(),
+          '/element': (_) => ElementPage(),
+          '/editInfo': (_) => EditInfo(titleName:'Editar Información',),
+          '/login': (context) => Login(titleName: 'Log In'),
+          '/logup': (context) => Logup(titleName: 'Sign Up'),      
         },
       ),
     );

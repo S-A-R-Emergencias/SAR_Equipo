@@ -58,8 +58,8 @@ List<Email> emails = List.generate(
       tagColor: demo_data[index]['tagColor'],
       time: demo_data[index]['time'],
       body: emailDemoText,
-      latitude: 15.56,
-      longitude: 12,
+      latitude: 0,
+      longitude: 0,
       mail: ""),
 );
 

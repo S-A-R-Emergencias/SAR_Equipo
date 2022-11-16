@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sar_equipo/src/footer/footer_button.dart';
+import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
+import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
+import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/widget/responsive_widget.dart';
 
 class Footer extends ResponsiveWidget{
@@ -121,12 +125,27 @@ class MobileFooter extends StatelessWidget{
             Expanded(child: Container()),
             Column(
               children: [
-                FooterButton(onTap: (){}, text: 'Página principal'),
-                FooterButton(onTap: (){}, text: 'Mapa de Calor'),
-                FooterButton(onTap: (){}, text: 'Inventario'),
-                FooterButton(onTap: (){}, text: 'Atendidos'),
-                FooterButton(onTap: (){}, text: 'Política de Privacidad'),
-                FooterButton(onTap: (){}, text: 'Terminos y condiciones'),
+                FooterButton(onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainScreen(emailDefault: emails[0])),
+                    );
+                }, text: 'Página principal'),
+                FooterButton(onTap: (){
+                  if(Environment.usersession!.role == "1")
+                  {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ElementPage()),
+                    );
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                }, text: 'Inventario'),
               ],
             ),
             Column(

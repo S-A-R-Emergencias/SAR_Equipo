@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
+import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/navigation_bar/nav_bar_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:sar_equipo/src/notification_view/models/Email.dart';
+import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/widget/responsive_widget.dart';
 
@@ -49,7 +52,14 @@ class DesktopNavBar extends StatelessWidget {
               ),
             ),
             Expanded(child: Container()),
-            NavBarButton(onTap: () {}, text: 'Página principal'),
+            NavBarButton(onTap: () {
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainScreen(emailDefault: emails[0])),
+                    );
+              
+            }, text: 'Página principal'),
             NavBarButton(
                 onTap: () {
                   if(Environment.usersession!.role == "1")
@@ -67,6 +77,19 @@ class DesktopNavBar extends StatelessWidget {
                   
                 },
                 text: 'Inventario'),
+              NavBarButton(
+                onTap: () {
+                  if(Environment.usersession!.role == "1")
+                  {
+                    Navigator.pushNamed(context, '/logup');
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                  
+                },
+                text: 'Registrar Personal'),
             NavBarButton(onTap: () {
               Environment.usersession = null;
               Navigator.push(

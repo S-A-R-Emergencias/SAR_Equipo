@@ -1,13 +1,6 @@
 import 'dart:async';
-import 'dart:html';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sar_equipo/Models/person_model.dart';
 import 'package:sar_equipo/Models/personnel_model.dart';
 import 'package:sar_equipo/constans.dart';
 import 'package:sar_equipo/src/global/environment.dart';
@@ -15,38 +8,80 @@ import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
 import 'package:sar_equipo/src/services/personnel_service.dart';
 
-class Logup extends StatefulWidget {
-  const Logup({Key? key, required this.titleName}) : super(key: key);
+class EditInfo extends StatefulWidget {
+  const EditInfo({Key? key, required this.titleName, this.personnelSend}) : super(key: key);
 
   final String titleName; //declared variable
-
+  final Personnel? personnelSend;
   @override
-  State<Logup> createState() => _LogupState();
+  State<EditInfo> createState() => _EditInfoState(personnelSend);
 }
 
-class _LogupState extends State<Logup> {
-  final Personnel personnel = Personnel();
-  TextEditingController birthDateController= new TextEditingController();
-  
+class _EditInfoState extends State<EditInfo> {
+  Personnel? personnel;
+
+  _EditInfoState(this.personnel);
   var grades = ['Administrativo','Medico','Bombero','Voluntario'];
   var roles = ['Administrador','Miembro'];
   String selectedGrade = 'Voluntario';
   String selectedRole = "Miembro";
-  String seledtedDate = "2002-02-02";
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController lastNameController = new TextEditingController();
+  TextEditingController secontLastNameController= new TextEditingController();
+  TextEditingController birthDateController= new TextEditingController();
+  TextEditingController ciController= new TextEditingController();
+  TextEditingController phoneController= new TextEditingController();
+  TextEditingController addressController= new TextEditingController();
+  TextEditingController bloodtypeController= new TextEditingController();
+  TextEditingController alerController= new TextEditingController();
+  void InitializeText(){
+    emailController.text = personnel!.email!;
+    nameController.text = personnel!.name!;
+    lastNameController.text = personnel!.lastName!;
+    secontLastNameController.text = personnel!.secondLastName == null?"":personnel!.secondLastName!;
+    birthDateController.text = personnel!.birthDate!.year.toString() + "-" + personnel!.birthDate!.month.toString() + "-" + personnel!.birthDate!.day.toString();
+    ciController.text = personnel!.ci!.toString();
+    phoneController.text = personnel!.telephone!.toString();
+    addressController.text = personnel!.address!;
+    bloodtypeController.text = personnel!.bloodType!;
+    alerController.text = personnel!.allergies!;
+    selectedGrade = personnel!.grade!;
+    selectedRole = personnel!.role!;
+    switch (personnel!.role!) {
+      case '1':
+        selectedRole = "Miembro";
+      break;
+      case '2':
+        selectedRole = "Administrador";
+      break;
+      default: selectedRole = "Miembro";
+    }
+  }
 
-  Future<http.Response> logup() async {
-    personnel.grade = selectedGrade;
+  Future<http.Response> UpdateInfo() async {
+    personnel!.grade = selectedGrade;
     switch (selectedRole) {
       case 'Miembro':
-        personnel.role = "1";
+        personnel!.role = "1";
       break;
       case 'Administrador':
-        personnel.role = "2";
+        personnel!.role = "2";
       break;
-      default: personnel.role = "1";
+      default: personnel!.role = "1";
     }
+    personnel!.email = emailController.text;
+    personnel!.name = nameController.text;
+    personnel!.lastName = lastNameController.text;
+    personnel!.secondLastName == null?null:secontLastNameController.text;
+    personnel!.ci = int.parse(ciController.text);
+    personnel!.telephone= int.parse(phoneController.text);
+    personnel!.address = addressController.text;
+    personnel!.bloodType = bloodtypeController.text;
+    personnel!.allergies = alerController.text;
+    personnel!.grade = selectedGrade;
     PersonnelService service = PersonnelService();
-    final response = service.postPerson(personnel);
+    final response = service.putPerson(personnel!);
     return (response);
   }
   @override
@@ -56,9 +91,11 @@ class _LogupState extends State<Logup> {
     double _height_container = _height * 0.9;
     double _width_container = _width * 0.9;
     double espacio = 15.0;
+    
     if(Environment.usersession == null){
       return Login(titleName: 'Log In');
     }else{
+    InitializeText();
     return Scaffold(
         body: Container(
       width: double.infinity,
@@ -121,9 +158,8 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.email),
                             ),
-                            onChanged: (value) {
-                              personnel.email = value;
-                            },
+                            controller: emailController
+                            
                           ),
                         ),
                       ),
@@ -150,9 +186,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.person),
                             ),
-                            onChanged: (value) {
-                              personnel.name = value;
-                            },
+                            controller:nameController
                           ),
                         ),
                       ),
@@ -179,9 +213,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.person),
                             ),
-                            onChanged: (value) {
-                              personnel.lastName = value;
-                            },
+                            controller:lastNameController
                           ),
                         ),
                       ),
@@ -208,9 +240,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.person),
                             ),
-                            onChanged: (value) {
-                              personnel.secondLastName = value;
-                            },
+                           controller:secontLastNameController
                           ),
                         ),
                       ),
@@ -233,21 +263,12 @@ class _LogupState extends State<Logup> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: TextField(
                             readOnly: true,
+                            controller: birthDateController,
                             onTap:() async {
-                              DateTime? pickedDate;
-                              pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1950), lastDate: DateTime.now());
-                              
+                              DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1950), lastDate: DateTime.now());
                               if(pickedDate!= null){
-                                try{
-                                  personnel.birthDate = pickedDate;
-                                  
-                                  birthDateController.text = pickedDate.year.toString() + "-" + pickedDate.month.toString() + "-" + pickedDate.day.toString();
-                                }catch (e) {
-
-                                }
-                                
                                 setState(() {
-                                  
+                                  birthDateController.text = pickedDate.year.toString() + "-" + pickedDate.month.toString() + "-" + pickedDate.day.toString();
                                 });
                               }
                             },
@@ -255,10 +276,7 @@ class _LogupState extends State<Logup> {
                               labelText: 'Fecha de Nacimiento',
                               border: InputBorder.none,
                               icon: Icon(Icons.date_range),
-                              hintText: seledtedDate
                             ),
-                            controller: birthDateController,
-                            
                           ),
                         ),
                       ),
@@ -285,9 +303,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.card_membership),
                             ),
-                            onChanged: (value) {
-                              personnel.ci = int.parse(value);
-                            },
+                            controller: ciController,
                           ),
                         ),
                       ),
@@ -314,9 +330,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.phone),
                             ),
-                            onChanged: (value) {
-                              personnel.telephone = int.parse(value);
-                            },
+                            controller: phoneController,
                           ),
                         ),
                       ),
@@ -326,63 +340,6 @@ class _LogupState extends State<Logup> {
                     SizedBox(
                       height: espacio,
                     ),
-
-                    //Password InputText
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: kBgLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Contraseña',
-                              border: InputBorder.none,
-                              icon: Icon(Icons.password),
-                            ),
-                            onChanged: (value) {
-                              personnel.password = value;
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                    //Password End
-
-                    SizedBox(
-                      height: espacio,
-                    ),
-
-                    //VPassword InputText
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: kBgLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Vuelve a escribir tu contraseña',
-                              border: InputBorder.none,
-                              icon: Icon(Icons.password),
-                            ),
-                            onChanged: (value) {
-                              personnel.password = value;
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                    //VPassword End
-
                     SizedBox(
                       height: espacio + 15,
                     ),
@@ -393,10 +350,11 @@ class _LogupState extends State<Logup> {
                           child: TextButton(
                             style: elevatedButtonStyle,
                             onPressed: () => {
-                              logup().then((value) => {
+                              UpdateInfo().then((value) => {
                                     if (value.statusCode == 200 ||
                                         value.statusCode == 204)
                                       {
+                                        Environment.usersession = personnel,
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -414,7 +372,7 @@ class _LogupState extends State<Logup> {
                                   }),
                             },
                             child: const Text(
-                              "Sing Up",
+                              "Actualizar",
                               style: TextStyle(
                                   color: Color(0xB8F7F7F8),
                                   fontWeight: FontWeight.bold),
@@ -423,26 +381,6 @@ class _LogupState extends State<Logup> {
                         ),
                         SizedBox(
                           width: 60,
-                        ),
-
-                        //Login
-                        ButtonTheme(
-                          child: TextButton(
-                            style: elevatedButtonStyle,
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          Login(titleName: 'Log In')))),
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Color(0xB8F7F7F8),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -477,9 +415,7 @@ class _LogupState extends State<Logup> {
                               border: InputBorder.none,
                               icon: Icon(Icons.grade),
                             ),
-                            onChanged: (value) {
-                              personnel.address = value;
-                            },
+                            controller: addressController,
                           ),
                         ),
                       ),
@@ -502,11 +438,14 @@ class _LogupState extends State<Logup> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: DropdownButton(
+                            
                             items: grades.map((String a){
                               return DropdownMenuItem(value: a,child: Text(a));}).toList(), 
                             onChanged: (String? _value)=>{
-                              selectedGrade = _value!,
-                              setState(() {})}
+                              if(Environment.usersession!.role =="2"){
+                                selectedGrade = _value!,
+                                setState(() {})}
+                              }
                             ,
                             hint: Text(selectedGrade)),
                         ),
@@ -533,8 +472,10 @@ class _LogupState extends State<Logup> {
                             items: roles.map((String a){
                               return DropdownMenuItem(value: a,child: Text(a));}).toList(), 
                             onChanged: (String? _value)=>{
-                              selectedRole = _value!,
-                              setState(() {})}
+                              if(Environment.usersession!.role =="2"){
+                                selectedRole = _value!,
+                                setState(() {})}
+                              }
                             ,
                             hint: Text(selectedRole)),
                         ),
@@ -556,14 +497,13 @@ class _LogupState extends State<Logup> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: TextField(
+                            readOnly:true,
                             decoration: InputDecoration(
                               labelText: 'Tipo de Sangre',
                               border: InputBorder.none,
                               icon: Icon(Icons.bloodtype),
                             ),
-                            onChanged: (value) {
-                              personnel.bloodType = value;
-                            },
+                            controller: bloodtypeController,
                           ),
                         ),
                       ),
@@ -585,14 +525,13 @@ class _LogupState extends State<Logup> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: TextField(
+                            readOnly:true,
                             decoration: InputDecoration(
                               labelText: 'Alergia',
                               border: InputBorder.none,
                               icon: Icon(Icons.dangerous),
                             ),
-                            onChanged: (value) {
-                              personnel.allergies = value;
-                            },
+                            controller:alerController
                           ),
                         ),
                       ),
@@ -612,7 +551,7 @@ class _LogupState extends State<Logup> {
                       width: _width_container * 0.3,
                       fit: BoxFit.cover,
                     ),
-                  ))),
+              ))),
             ],
           ),
         ),

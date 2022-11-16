@@ -26,7 +26,7 @@ class Element_m {
 
   int? id;
   String? name;
-  int? serialNumber;
+  String? serialNumber;
   int? amount;
   String? description;
   String? unitOfMeasurement;
@@ -63,7 +63,7 @@ class Element_m {
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "serialNumber": serialNumber == null ? null : int.parse(serialNumber.toString()),
+        "serialNumber": serialNumber == null ? null : serialNumber,
         "amount": amount == null ? null : int.parse(amount.toString()),
         "description": description == null ? null : description,
         "unitOfMeasurement":

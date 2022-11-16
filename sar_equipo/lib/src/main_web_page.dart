@@ -12,7 +12,9 @@ class MainWebPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double maxWidth = width > 1200 ? 1920 : width;
-
+    if(Environment.usersession == null){
+      return Login(titleName: 'Log In');
+    }else{
     return Scaffold(
       body: ListView(
             children: [
@@ -25,6 +27,6 @@ class MainWebPage extends StatelessWidget {
                   ),
             ],
           ),
-      );
+      );}
   }
 }
