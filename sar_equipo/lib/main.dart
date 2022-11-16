@@ -62,7 +62,8 @@ void getNotifications() async {
         body: notification.get("body").toString(),
         latitude: notification.get("latitude"),
         longitude: notification.get("longitude"),
-        mail: notification.get("mail")));
+        mail: notification.get("mail"),
+        notificationImage: notification.get("notificationImage")));
   }
 }
 

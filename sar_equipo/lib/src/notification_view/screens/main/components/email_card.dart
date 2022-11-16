@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
+import '../../../../global/environment.dart';
 import '../../../constants.dart';
 import '../../../extensions.dart';
 import '../../../models/Email.dart';
 
-class EmailCard extends StatelessWidget {
+class EmailCard extends StatefulWidget {
   const EmailCard({
     Key? key,
     this.isActive = true,
@@ -18,12 +21,29 @@ class EmailCard extends StatelessWidget {
   final VoidCallback press;
 
   @override
+  State<EmailCard> createState() => _EmailCardState();
+}
+
+class _EmailCardState extends State<EmailCard> {
+  String imageN = "";
+  @override
+  void initState() {
+    if (widget.email.image == "") {
+      imageN = imageGlobaAnom;
+    } else {
+      imageN = widget.email.image;
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
       child: InkWell(
-        onTap: press,
+        onTap: widget.press,
         child: Stack(
           children: [
             Container(
@@ -33,7 +53,7 @@ class EmailCard extends StatelessWidget {
                   top: kDefaultPadding,
                   bottom: kDefaultPadding),
               decoration: BoxDecoration(
-                color: isActive ? kPrimaryColor : kBgDarkColor,
+                color: widget.isActive ? kPrimaryColor : kBgDarkColor,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -44,28 +64,29 @@ class EmailCard extends StatelessWidget {
                         width: 32,
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(email.image),
+                          backgroundImage: Image.memory(base64Decode(imageN),width: 190,fit: BoxFit.fitWidth).image
                         ),
                       ),
                       const SizedBox(width: kDefaultPadding / 2),
                       Expanded(
                         child: Text.rich(
                           TextSpan(
-                            text: "${email.name} \n",
+                            text: "${widget.email.name} \n",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: isActive ? Colors.white : kTextColor,
+                              color: widget.isActive ? Colors.white : kTextColor,
                             ),
+                            
                             children: [
                               TextSpan(
-                                text: email.type,
+                                text: widget.email.type,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
                                     ?.copyWith(
                                       color:
-                                          isActive ? Colors.white : kTextColor,
+                                          widget.isActive ? Colors.white : kTextColor,
                                     ),
                               ),
                             ],
@@ -75,17 +96,17 @@ class EmailCard extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            email.time.toString(),
+                            DateTime.parse(widget.email.time).hour.toString() + ":" + DateTime.parse(widget.email.time).minute.toString(),
                             style:
                                 Theme.of(context).textTheme.caption?.copyWith(
-                                      color: isActive ? Colors.white70 : null,
+                                      color: widget.isActive ? Colors.white70 : null,
                                     ),
                           ),
                           const SizedBox(height: 5),
-                          if (email.isChecked)
+                          if (widget.email.isChecked)
                             WebsafeSvg.asset(
                               "assets/Icons/Paperclip.svg",
-                              color: isActive ? Colors.white70 : kGrayColor,
+                              color: widget.isActive ? Colors.white70 : kGrayColor,
                             )
                         ],
                       ),
@@ -93,12 +114,12 @@ class EmailCard extends StatelessWidget {
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
                   Text(
-                    email.body,
+                    widget.email.body,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           height: 1.5,
-                          color: isActive ? Colors.white70 : null,
+                          color: widget.isActive ? Colors.white70 : null,
                         ),
                   )
                 ],
@@ -110,7 +131,7 @@ class EmailCard extends StatelessWidget {
               topShadowColor: Colors.white60,
               bottomShadowColor: const Color(0xFF234395).withOpacity(0.15),
             ),
-            if (!email.isChecked)
+            if (!widget.email.isChecked)
               Positioned(
                 right: 8,
                 top: 8,
@@ -128,14 +149,14 @@ class EmailCard extends StatelessWidget {
                 ),
               ),
             // ignore: unnecessary_null_comparison
-            if (email.tagColor != null)
+            if (widget.email.tagColor != null)
               Positioned(
                 left: -35,
                 top: 0,
                 child: WebsafeSvg.asset(
                   "assets/Icons/line.svg",
                   height: 110,
-                  color: email.tagColor,
+                  color: widget.email.tagColor,
                 ),
               )
           ],

@@ -38,7 +38,8 @@ Email Cargar(QueryDocumentSnapshot<Object?> not) {
       body: not.get("body").toString(),
       latitude: not.get("latitude"),
       longitude: not.get("longitude"),
-      mail: not.get("mail"));
+      mail: not.get("mail"),
+      notificationImage: not.get("notificationImage"));
   return a;
 }
 

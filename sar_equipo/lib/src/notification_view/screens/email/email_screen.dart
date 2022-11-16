@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../../models/Email.dart';
@@ -31,6 +33,7 @@ double latitude = 0;
 double longitude = 0;
 
 String typeERA = "";
+String imageN = "";
 
 void updateMarkerChange(Offset position) {
   _markerPosition = _controller.pixelToLatLng(position);
@@ -61,6 +64,11 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    if (widget.email.image == "") {
+      imageN = imageGlobaAnom;
+    } else {
+      imageN = widget.email.image;
+    }
     _zoomPanBehavior = _CustomZoomPanBehavior()..onTap = updateMarkerChange;
     _controller = MapTileLayerController();
     switch (widget.email.normalPanicAnonymous) {
@@ -97,7 +105,11 @@ class _EmailScreenState extends State<EmailScreen> {
                       CircleAvatar(
                         maxRadius: 24,
                         backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(widget.email.image),
+                        backgroundImage: Image.memory(
+                                base64Decode(imageN),
+                                width: 190,
+                                fit: BoxFit.fitWidth)
+                            .image,
                       ),
                       SizedBox(width: kDefaultPadding),
                       Expanded(
@@ -139,7 +151,25 @@ class _EmailScreenState extends State<EmailScreen> {
                                 ),
                                 SizedBox(width: kDefaultPadding / 2),
                                 Text(
-                                  "Hora " + widget.email.time,
+                                  DateTime.parse(widget.email.time)
+                                          .hour
+                                          .toString() +
+                                      ":" +
+                                      DateTime.parse(widget.email.time)
+                                          .minute
+                                          .toString() +
+                                      " / " +
+                                      DateTime.parse(widget.email.time)
+                                          .year
+                                          .toString() +
+                                      "-" +
+                                      DateTime.parse(widget.email.time)
+                                          .month
+                                          .toString() +
+                                      "-" +
+                                      DateTime.parse(widget.email.time)
+                                          .day
+                                          .toString(),
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                               ],
@@ -216,6 +246,32 @@ class _EmailScreenState extends State<EmailScreen> {
                                             ),
                                           ],
                                         )),
+                                    SizedBox(height: kDefaultPadding),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Imagen Informativa",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption,
+                                        )
+                                      ],
+                                    ),
+                                    Divider(thickness: 1),
+                                    SizedBox(height: kDefaultPadding / 2),
+                                    if (widget.email.notificationImage != "")
+                                      Image.memory(
+                                        base64Decode(widget
+                                            .email.notificationImage
+                                            .toString()),
+                                        height: 400,
+                                        fit: BoxFit.fitWidth,
+                                      )
                                   ],
                                 ),
                               ),
