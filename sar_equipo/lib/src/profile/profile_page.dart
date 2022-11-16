@@ -229,6 +229,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {});
           SnackBar(
           content: const Text('Foto Actualizada'),);
+        } else {
+          SnackBar(
+          content: const Text('Actualizacion fallida'),);
         }
       } catch (e) {
         print(e);
