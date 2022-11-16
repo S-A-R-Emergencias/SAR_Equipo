@@ -62,7 +62,7 @@ class DesktopNavBar extends StatelessWidget {
             }, text: 'Página principal'),
             NavBarButton(
                 onTap: () {
-                  if(Environment.usersession!.role == "1")
+                  if(Environment.usersession!.role == "2")
                   {
                     Navigator.push(
                     context,
@@ -79,7 +79,7 @@ class DesktopNavBar extends StatelessWidget {
                 text: 'Inventario'),
               NavBarButton(
                 onTap: () {
-                  if(Environment.usersession!.role == "1")
+                  if(Environment.usersession!.role == "2")
                   {
                     Navigator.pushNamed(context, '/logup');
                   }else {
@@ -122,10 +122,45 @@ class MobileNavBar extends HookConsumerWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                NavBarButton(onTap: () {}, text: 'Página principal'),
-                NavBarButton(onTap: () {}, text: 'Mapa de Calor'),
-                NavBarButton(onTap: () {}, text: 'Inventario'),
-                NavBarButton(onTap: () {}, text: 'Atendidos'),
+                NavBarButton(onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainScreen(emailDefault: emails[0])),
+                    );
+                }, text: 'Página principal'),
+                NavBarButton(onTap: () {
+                  if(Environment.usersession!.role == "2")
+                  {
+                    Navigator.pushNamed(context, '/logup');
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                }, text: 'Registro Personal'),
+                NavBarButton(onTap: () {
+                  if(Environment.usersession!.role == "2")
+                  {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ElementPage()),
+                    );
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                }, text: 'Inventario'),
+                NavBarButton(onTap: () {
+                  Environment.usersession = null;
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Login(titleName: "Login",)),
+                    );
+                }, text: 'Cerrar Sesión'),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: Stack(
@@ -142,18 +177,6 @@ class MobileNavBar extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(16.0),
-                          primary: Color.fromRGBO(34, 40, 49, 1),
-                          textStyle: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: const Text('Iniciar Sesión'),
                       ),
                     ],
                   ),

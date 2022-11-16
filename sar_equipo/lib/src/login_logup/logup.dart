@@ -421,29 +421,6 @@ class _LogupState extends State<Logup> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 60,
-                        ),
-
-                        //Login
-                        ButtonTheme(
-                          child: TextButton(
-                            style: elevatedButtonStyle,
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          Login(titleName: 'Log In')))),
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Color(0xB8F7F7F8),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],

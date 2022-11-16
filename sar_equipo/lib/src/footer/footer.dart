@@ -8,6 +8,7 @@ import 'package:sar_equipo/src/notification_view/models/Email.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/widget/responsive_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Footer extends ResponsiveWidget{
   const Footer({Key? key }):super(key: key);
@@ -60,24 +61,34 @@ class DesktopFooter extends StatelessWidget{
             Expanded(child: Container()),
             Column(
               children: [
-                FooterButton(onTap: (){}, text: 'Página principal'),
-                FooterButton(onTap: (){}, text: 'Mapa de Calor'),
-                FooterButton(onTap: (){}, text: 'Inventario'),
-                FooterButton(onTap: (){}, text: 'Atendidos'),
+                FooterButton(onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainScreen(emailDefault: emails[0])),
+                    );
+                }, text: 'Página principal'),
+                FooterButton(onTap: (){
+                  if(Environment.usersession!.role == "2")
+                  {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ElementPage()),
+                    );
+                  }else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No tienes acceso"),
+                                  ));
+                  }
+                }, text: 'Inventario'),
               ],
             ),
             Column(
               children: [
-                FooterButton(onTap: (){}, text: 'Facebook'),
-                FooterButton(onTap: (){}, text: 'Instagram'),
-                FooterButton(onTap: (){}, text: 'Telegram'),
-                FooterButton(onTap: (){}, text: 'Twitter'),
-              ],
-            ),
-            Column(
-              children: [
-                FooterButton(onTap: (){}, text: 'Política de Privacidad'),
-                FooterButton(onTap: (){}, text: 'Terminos y condiciones'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://www.facebook.com/sarboliviacbba/"));}, text: 'Facebook'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://www.instagram.com/sar_bolivia/?hl=es"));}, text: 'Instagram'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://twitter.com/sarboliviacbba?lang=es"));}, text: 'Twitter'),
               ],
             ),
             Expanded(child: Container()),
@@ -133,7 +144,7 @@ class MobileFooter extends StatelessWidget{
                     );
                 }, text: 'Página principal'),
                 FooterButton(onTap: (){
-                  if(Environment.usersession!.role == "1")
+                  if(Environment.usersession!.role == "2")
                   {
                     Navigator.push(
                     context,
@@ -150,10 +161,9 @@ class MobileFooter extends StatelessWidget{
             ),
             Column(
               children: [
-                FooterButton(onTap: (){}, text: 'Facebook'),
-                FooterButton(onTap: (){}, text: 'Instagram'),
-                FooterButton(onTap: (){}, text: 'Telegram'),
-                FooterButton(onTap: (){}, text: 'Twitter'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://www.facebook.com/sarboliviacbba/"));}, text: 'Facebook'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://www.instagram.com/sar_bolivia/?hl=es"));}, text: 'Instagram'),
+                FooterButton(onTap: (){launchUrl(Uri.parse("https://twitter.com/sarboliviacbba?lang=es"));}, text: 'Twitter'),
               ],
             ),
           ],
