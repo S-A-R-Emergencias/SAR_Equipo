@@ -148,13 +148,42 @@ class SideMenu extends StatelessWidget {
               atendidos = false;
               anonimos = false;
               filter = 2;
-              Navigator.pushNamed(context, '/element');
+              if(Environment.usersession!.role == "2")
+              {
+                Navigator.pushNamed(context, '/element');
+              }else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("No tienes acceso"),
+                              ));
+              }
             },
             title: "Inventario",
             iconSrc: "assets/Icons/Transfer.svg",
             isActive: false,
             itemCount: 1,
           ),
+          SideMenuItem(
+            press: () {
+              todas = false;
+              emergencias = false;
+              reportes = false;
+              atendidos = false;
+              filter = 2;
+              if(Environment.usersession!.role == "2")
+              {
+                Navigator.pushNamed(context, '/logup');
+              }else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("No tienes acceso"),
+                              ));
+              }
+            },
+            title: "Registro",
+            iconSrc: "assets/Icons/Transfer.svg",
+            isActive: false,
+            itemCount: 1,
+          ),
+          
           const SizedBox(height: kDefaultPadding * 2),
           // Tags
         ],
