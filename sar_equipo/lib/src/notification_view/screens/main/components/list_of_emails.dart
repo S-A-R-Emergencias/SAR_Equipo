@@ -38,7 +38,8 @@ Email Cargar(QueryDocumentSnapshot<Object?> not) {
       body: not.get("body").toString(),
       latitude: not.get("latitude"),
       longitude: not.get("longitude"),
-      mail: not.get("mail"));
+      mail: not.get("mail"),
+      notificationImage: not.get("notificationImage"));
   return a;
 }
 
@@ -84,18 +85,12 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                       Expanded(
                         child: TextField(
                           onChanged: (value) {},
+                          readOnly: true,
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                            hintText: "Search",
+                            hintText: "Notifications",
                             fillColor: kBgLightColor,
                             filled: true,
-                            suffixIcon: Padding(
-                              padding:
-                                  const EdgeInsets.all(kDefaultPadding * 0.75),
-                              child: WebsafeSvg.asset(
-                                "assets/Icons/Search.svg",
-                                width: 24,
-                              ),
-                            ),
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
@@ -117,18 +112,10 @@ class _ListOfEmailsState extends State<ListOfEmails> {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      "Sort by date",
+                      "Listado",
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Spacer(),
-                    MaterialButton(
-                      minWidth: 20,
-                      onPressed: () {},
-                      child: WebsafeSvg.asset(
-                        "assets/Icons/Sort.svg",
-                        width: 16,
-                      ),
-                    ),
                   ],
                 ),
               ),

@@ -72,7 +72,7 @@ class SideMenu extends StatelessWidget {
               reportes = false;
               atendidos = false;
               anonimos = false;
-              filter = 2;
+              filter = 1;
               Navigator.pushNamed(context, '/notification');
             },
             title: "Espera",
@@ -123,7 +123,6 @@ class SideMenu extends StatelessWidget {
             title: "Atendidos",
             iconSrc: "assets/Icons/Markup.svg",
             isActive: atendidos,
-            showBorder: false,
             itemCount: 4,
           ),
           SideMenuItem(
@@ -139,7 +138,6 @@ class SideMenu extends StatelessWidget {
             title: "Anonimos",
             iconSrc: "assets/Icons/Sort.svg",
             isActive: anonimos,
-            showBorder: false,
             itemCount: 5,
           ),
           SideMenuItem(
@@ -148,6 +146,7 @@ class SideMenu extends StatelessWidget {
               emergencias = false;
               reportes = false;
               atendidos = false;
+              anonimos = false;
               filter = 2;
               if(Environment.usersession!.role == "2")
               {
@@ -160,9 +159,8 @@ class SideMenu extends StatelessWidget {
             },
             title: "Inventario",
             iconSrc: "assets/Icons/Transfer.svg",
-            isActive: atendidos,
-            showBorder: false,
-            itemCount: 6,
+            isActive: false,
+            itemCount: 1,
           ),
           SideMenuItem(
             press: () {
@@ -182,9 +180,8 @@ class SideMenu extends StatelessWidget {
             },
             title: "Registro",
             iconSrc: "assets/Icons/Transfer.svg",
-            isActive: atendidos,
-            showBorder: false,
-            itemCount: 6,
+            isActive: false,
+            itemCount: 1,
           ),
           
           const SizedBox(height: kDefaultPadding * 2),
@@ -193,12 +190,20 @@ class SideMenu extends StatelessWidget {
       ),
     );
   }
-  Widget ProfileImage(){
-    if(Environment.usersession!.image==null){
-      return Image.network('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',width: 50,fit: BoxFit.fitWidth,);
-    }
-    else{
-      return Image.memory(base64Decode(Environment.usersession!.image.toString()),width: 50,fit: BoxFit.fitWidth,);
+
+  Widget ProfileImage() {
+    if (Environment.usersession!.image == null) {
+      return Image.network(
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        width: 50,
+        fit: BoxFit.fitWidth,
+      );
+    } else {
+      return Image.memory(
+        base64Decode(Environment.usersession!.image.toString()),
+        width: 50,
+        fit: BoxFit.fitWidth,
+      );
     }
   }
 }
