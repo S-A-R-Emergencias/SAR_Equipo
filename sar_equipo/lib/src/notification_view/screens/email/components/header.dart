@@ -37,23 +37,7 @@ class Header extends StatelessWidget {
           ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
-            icon: WebsafeSvg.asset(
-              "assets/Icons/Reply.svg",
-              width: 24,
-            ),
-            onPressed: () {},
-          ),
-          const SizedBox(width: kDefaultPadding / 2),
-          IconButton(
-            icon: WebsafeSvg.asset(
-              "assets/Icons/Reply all.svg",
-              width: 24,
-            ),
-            onPressed: () {},
-          ),
-          const SizedBox(width: kDefaultPadding / 2),
-          IconButton(
-            icon: Icon(Icons.signpost_sharp),
+            icon: Icon(Icons.signpost_sharp, color: kGrayColor,),
             onPressed: () {
               if(actual!= null){
                 launchUrl(Uri.parse("https://www.google.com/maps/search/?api=1&query="+actual.latitude.toString()+","+actual.longitude.toString() +"&zoom=18"));
@@ -62,15 +46,6 @@ class Header extends StatelessWidget {
             },
           ),
           const Spacer(),
-          if (Responsive.isDesktop(context))
-            IconButton(
-              icon: WebsafeSvg.asset(
-                "assets/Icons/Printer.svg",
-                width: 24,
-              ),
-              onPressed: () {},
-            ),
-          const SizedBox(width: kDefaultPadding / 2),
           IconButton(
             icon: WebsafeSvg.asset(
               "assets/Icons/Markup.svg",
@@ -84,14 +59,6 @@ class Header extends StatelessWidget {
               docNotification.update({'isChecked': true});
               Navigator.pop(context);
             },
-          ),
-          const SizedBox(width: kDefaultPadding / 2),
-          IconButton(
-            icon: WebsafeSvg.asset(
-              "assets/Icons/More vertical.svg",
-              width: 24,
-            ),
-            onPressed: () {},
           ),
           const SizedBox(width: kDefaultPadding / 2),
         ],
