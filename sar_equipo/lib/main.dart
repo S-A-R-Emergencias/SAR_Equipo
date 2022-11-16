@@ -38,11 +38,17 @@ void getNotifications() async {
   QuerySnapshot notifications = await collectionReference.get();
 
   for (var notification in notifications.docs) {
-    Color col;
-    if (notification.get("normal_Panic")) {
-      col = Color.fromARGB(255, 255, 0, 0);
-    } else {
-      col = Color.fromARGB(255, 39, 54, 115);
+    Color col = Color.fromARGB(0, 0, 0, 0);
+    switch (notification.get("normal_Panic")) {
+      case 0:
+        col = Color.fromARGB(255, 255, 0, 0);
+        break;
+      case 1:
+        col = Color.fromARGB(255, 39, 54, 115);
+        break;
+      case 2:
+        col = Color.fromARGB(0, 0, 0, 0);
+        break;
     }
     myNotifications.add(Email(
         id: notification.id,
