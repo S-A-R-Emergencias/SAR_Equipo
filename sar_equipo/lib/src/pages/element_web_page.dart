@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:sar_equipo/main.dart';
 import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
+import 'package:sar_equipo/src/navigation_bar/nav_bar.dart';
 import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/product/UpdateProduct.dart';
 import '../../Models/element_model.dart';
@@ -65,7 +66,7 @@ class _ElementPageState extends State<ElementPage> {
                     iconSize: 50,
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, '/notification');
                       },
                     ),
                     Container(width: 100,),
@@ -161,7 +162,7 @@ class _ElementPageState extends State<ElementPage> {
                         SizedBox(width: 80,),
                         Text("Cantidad: " +element.amount.toString()),
                         SizedBox(width: 80,),
-                        Text("Nº Serial: " +element.serialNumber.toString()),
+                        Text("Nº Serial: " +element.serialNumber!),
                       ],
                     ),
                     rorButtons(element, context),

@@ -32,6 +32,7 @@ class _LogupState extends State<Logup> {
   var roles = ['Administrador','Miembro'];
   String selectedGrade = 'Voluntario';
   String selectedRole = "Miembro";
+  String seledtedDate = "2002-02-02";
 
   Future<http.Response> logup() async {
     personnel.grade = selectedGrade;
@@ -231,13 +232,22 @@ class _LogupState extends State<Logup> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: TextField(
+                            readOnly: true,
                             onTap:() async {
                               DateTime? pickedDate;
                               pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(1950), lastDate: DateTime.now());
+                              
                               if(pickedDate!= null){
+                                try{
+                                  personnel.birthDate = pickedDate;
+                                  
+                                  birthDateController.text = pickedDate.year.toString() + "-" + pickedDate.month.toString() + "-" + pickedDate.day.toString();
+                                }catch (e) {
+
+                                }
+                                
                                 setState(() {
-                                  personnel.birthDate = DateTime.parse(pickedDate!.year.toString() + "-" + pickedDate!.month.toString() + "-" + pickedDate!.day.toString());
-                                  //birthDateController.text = pickedDate!.year.toString() + "-" + pickedDate!.month.toString() + "-" + pickedDate!.day.toString();
+                                  
                                 });
                               }
                             },
@@ -245,8 +255,10 @@ class _LogupState extends State<Logup> {
                               labelText: 'Fecha de Nacimiento',
                               border: InputBorder.none,
                               icon: Icon(Icons.date_range),
+                              hintText: seledtedDate
                             ),
                             controller: birthDateController,
+                            
                           ),
                         ),
                       ),

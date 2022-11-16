@@ -4,9 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sar_equipo/Models/element_model.dart';
+import 'package:sar_equipo/Models/element_type_model.dart';
 import 'package:sar_equipo/src/global/environment.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
+import 'package:sar_equipo/src/providers/elementtype.dart';
 import '../providers/element_provider.dart';
 import '../services/element_service.dart';
 
@@ -34,6 +37,7 @@ class _ProductState extends State<InsertProduct>{
     TextEditingController _unitOfMeasurement= new TextEditingController();
     int _user=  Environment.usersession!.id!;
     int _idElementType= 1;
+    String selectedType = "Selecciona un tipo";
     
 
     final picker = ImagePicker();
@@ -149,17 +153,22 @@ class _ProductState extends State<InsertProduct>{
 
     Future<void> insertElement(String path) async{
       try{
-        Element_m elementM = new Element_m(name:_name.text,serialNumber: int.parse(_serialNumber.text),
+        Element_m elementM = new Element_m(name:_name.text,serialNumber: _serialNumber.text,
         amount: int.parse(_amount.text),description: _description.text,unitOfMeasurement: _unitOfMeasurement.text,
         user: _user,idElementType:_idElementType, image: path);
-
         ElementService service = new ElementService();
         var res = await service.postElement(elementM);
-        ElementProvider.elements = null;
-        Navigator.pushNamed(context, '/element');
-      
+        if(res.statusCode == 500){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("No se pudo ingresar el registro, verifique los datos o el tamaño de la imagen" ),
+                                  ));
+        }else{
+          ElementProvider.elements = null;
+          Navigator.pushNamed(context, '/element');
+        }
       }catch(e){
-        _name.text ="error";
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text("Ha ocurrido un error inesperado" )));
       }    
     }
 
@@ -271,11 +280,12 @@ class _ProductState extends State<InsertProduct>{
                   focusedBorder: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: espacio,),
 
-            
+              _listTypeElements(),
 
-                SizedBox(height: espacio,),
-                  _MyButton("Registrar Producto"),   
+              SizedBox(height: espacio,),
+              _MyButton("Registrar Producto"),   
               ],
               
             ),
@@ -299,6 +309,39 @@ class _ProductState extends State<InsertProduct>{
           onPressed:(){opciones(context);},
         );
       },
+    );
+  }
+  Widget _listTypeElements() {
+    final elementsProvider = Provider.of<ElementTypeProvider>(context);
+    return FutureBuilder<List<ElementType>?>(
+      future: elementsProvider.getElementTypes(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ElementType>?> snapshot) {
+        if (snapshot.hasData) {
+          final elements = snapshot.data;
+          return Container(
+            width: 600,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: DropdownButton(
+                items: elements?.map((ElementType a){
+                  return DropdownMenuItem(value: a,child: Text(a.name!));}).toList(), 
+                onChanged: (ElementType? _value)=>{
+                  _idElementType = _value!.id!,
+                  selectedType = _value.name!,
+                  setState(() {})}
+                ,
+                hint: Text(selectedType)),
+              ));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+      
     );
   }
 }

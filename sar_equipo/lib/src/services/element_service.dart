@@ -37,8 +37,7 @@ class ElementService {
     final response = await http.post(Uri.parse('${Environment.apiURL}/element'),
         body: json.encode(e.toInsertJson()),
         headers: <String,String>{'Content-Type':'application/json; charset=UTF-8' });
-    final decoded = await json.decode(response.body);
-    return decoded;
+    return response;
   }
 
   Future<http.Response> putElement(Element_m e) async {

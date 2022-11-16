@@ -4,14 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sar_equipo/src/profile/edit_info.dart';
-import 'Models/element_model.dart';
-import 'src/product/UpdateProduct.dart';
-import 'package:sar_equipo/Models/element_model.dart';
+import 'package:sar_equipo/src/providers/elementtype.dart';
 import 'package:sar_equipo/src/login_logup/login.dart';
 import 'package:sar_equipo/src/login_logup/logup.dart';
 import 'package:sar_equipo/src/main_web_page.dart';
 import 'package:sar_equipo/src/notification_view/screens/main/main_screen.dart';
-import 'package:sar_equipo/src/product/InsertProduct.dart';
 import 'package:sar_equipo/src/pages/element_web_page.dart';
 import 'package:sar_equipo/src/providers/element_provider.dart';
 import 'package:sar_equipo/src/providers/person_provider.dart';
@@ -52,7 +49,7 @@ void getNotifications() async {
         name: notification.get("name").toString(),
         image: notification.get("image").toString(),
         type: notification.get("type"),
-        normalPanic: notification.get("normal_Panic"),
+        normalPanicAnonymous: notification.get("normal_Panic"),
         tagColor: col,
         isChecked: notification.get("isChecked"),
         time: notification.get("time"),
@@ -83,6 +80,7 @@ class _MainAppState extends State<MainApp> {
         ChangeNotifierProvider(create: (_) => PersonProvider()),
         ChangeNotifierProvider(create: (_) => PersonnelProvider()),
         ChangeNotifierProvider(create: (_) => ElementProvider()),
+        ChangeNotifierProvider(create: (_) => ElementTypeProvider()),
       ],
       child: MaterialApp(
         title: 'Sar Emergencias',
@@ -95,10 +93,7 @@ class _MainAppState extends State<MainApp> {
           '/element': (_) => ElementPage(),
           '/editInfo': (_) => EditInfo(titleName:'Editar Información',),
           '/login': (context) => Login(titleName: 'Log In'),
-          '/logup': (context) => Logup(titleName: 'Sign Up'),
-          '/elementInsert': (context) => InsertProduct(),
-          '/elementUpdate':(context)=> UpdateProduct(new Element_m()),
-          
+          '/logup': (context) => Logup(titleName: 'Sign Up'),      
         },
       ),
     );

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sar_equipo/src/notification_view/models/Email.dart';
 import 'package:sar_equipo/src/notification_view/responsive.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import '../../../constants.dart';
@@ -23,7 +24,16 @@ class Header extends StatelessWidget {
               "assets/Icons/Trash.svg",
               width: 24,
             ),
-            onPressed: () {},
+            onPressed: () {
+              String i = actual.id;
+              if (actual.id != "") {
+                FirebaseFirestore.instance
+                    .collection("notificacion")
+                    .doc(i)
+                    .delete();
+                Navigator.pushNamed(context, '/');
+              }
+            },
           ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
@@ -43,11 +53,13 @@ class Header extends StatelessWidget {
           ),
           const SizedBox(width: kDefaultPadding / 2),
           IconButton(
-            icon: WebsafeSvg.asset(
-              "assets/Icons/Transfer.svg",
-              width: 24,
-            ),
-            onPressed: () {},
+            icon: Icon(Icons.signpost_sharp),
+            onPressed: () {
+              if(actual!= null){
+                launchUrl(Uri.parse("https://www.google.com/maps/search/?api=1&query="+actual.latitude.toString()+","+actual.longitude.toString() +"&zoom=18"));
+              }
+              
+            },
           ),
           const Spacer(),
           if (Responsive.isDesktop(context))

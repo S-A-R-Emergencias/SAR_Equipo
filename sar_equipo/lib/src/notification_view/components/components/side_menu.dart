@@ -71,10 +71,11 @@ class SideMenu extends StatelessWidget {
               emergencias = false;
               reportes = false;
               atendidos = false;
+              anonimos = false;
               filter = 2;
               Navigator.pushNamed(context, '/notification');
             },
-            title: "Todas",
+            title: "Espera",
             iconSrc: "assets/Icons/Inbox.svg",
             isActive: todas,
             itemCount: 1,
@@ -85,6 +86,7 @@ class SideMenu extends StatelessWidget {
               emergencias = true;
               reportes = false;
               atendidos = false;
+              anonimos = false;
               filter = 3;
               Navigator.pushNamed(context, '/notification');
             },
@@ -99,6 +101,7 @@ class SideMenu extends StatelessWidget {
               emergencias = false;
               reportes = true;
               atendidos = false;
+              anonimos = false;
               filter = 4;
               Navigator.pushNamed(context, '/notification');
             },
@@ -113,14 +116,31 @@ class SideMenu extends StatelessWidget {
               emergencias = false;
               reportes = false;
               atendidos = true;
+              anonimos = false;
               filter = 2;
               Navigator.pushNamed(context, '/notification');
             },
             title: "Atendidos",
-            iconSrc: "assets/Icons/Trash.svg",
+            iconSrc: "assets/Icons/Markup.svg",
             isActive: atendidos,
             showBorder: false,
             itemCount: 4,
+          ),
+          SideMenuItem(
+            press: () {
+              todas = false;
+              emergencias = false;
+              reportes = false;
+              atendidos = false;
+              anonimos = true;
+              filter = 5;
+              Navigator.pushNamed(context, '/notification');
+            },
+            title: "Anonimos",
+            iconSrc: "assets/Icons/Sort.svg",
+            isActive: anonimos,
+            showBorder: false,
+            itemCount: 5,
           ),
           SideMenuItem(
             press: () {
@@ -137,7 +157,6 @@ class SideMenu extends StatelessWidget {
             showBorder: false,
             itemCount: 5,
           ),
-
           const SizedBox(height: kDefaultPadding * 2),
           // Tags
         ],
